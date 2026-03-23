@@ -1,0 +1,35 @@
+---
+interface Props {
+	label: string;
+	variant?: 'default' | 'pe';
+}
+
+const { label, variant = 'default' } = Astro.props;
+---
+
+<span class:list={['ih-chip', `ih-chip--${variant}`]}>{label}</span>
+
+<style>
+	.ih-chip {
+		display: inline-block;
+		padding: 0.125rem 0.5rem;
+		font-size: 0.75rem;
+		font-weight: 500;
+		line-height: 1.5;
+		border-radius: 1rem;
+		background: var(--sl-color-gray-6);
+		color: var(--sl-color-gray-2);
+		white-space: nowrap;
+		flex-shrink: 0;
+	}
+
+	.ih-chip--pe {
+		background: var(--ih-pe-chip-bg, rgba(230, 126, 34, 0.12));
+		color: var(--ih-pe-chip-text, #c65100);
+	}
+
+	:root[data-theme='dark'] .ih-chip--pe {
+		--ih-pe-chip-bg: rgba(230, 81, 0, 0.15);
+		--ih-pe-chip-text: #ffb74d;
+	}
+</style>

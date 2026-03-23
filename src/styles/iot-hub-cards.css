@@ -1,0 +1,222 @@
+/**
+ * Global styles for IoT Hub cards and chips rendered via client-side JS.
+ * Astro's scoped styles don't apply to innerHTML-injected markup,
+ * so these global rules handle the client-rendered filter results.
+ */
+
+/* Material Icons font for compact card icons (CF/RC) */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons&display=swap');
+
+.material-icons {
+	font-family: 'Material Icons';
+	font-weight: normal;
+	font-style: normal;
+	font-size: 20px;
+	line-height: 1;
+	letter-spacing: normal;
+	text-transform: none;
+	white-space: nowrap;
+	word-wrap: normal;
+	direction: ltr;
+	-webkit-font-smoothing: antialiased;
+	text-rendering: optimizeLegibility;
+	-moz-osx-font-smoothing: grayscale;
+	font-feature-settings: 'liga';
+}
+
+/* --- Base card --- */
+.ih-card {
+	background: var(--sl-color-bg-nav);
+	border: 1px solid var(--sl-color-gray-5);
+	border-radius: 0.5rem;
+	overflow: hidden;
+	transition: transform 0.2s, box-shadow 0.2s;
+	display: flex;
+	flex-direction: column;
+	text-decoration: none;
+	color: inherit;
+}
+
+.ih-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* --- Image area (dashboards/widgets) --- */
+.ih-card-image {
+	background: var(--sl-color-gray-6);
+	padding: 0.625rem;
+}
+
+.ih-card-image img {
+	width: 100%;
+	aspect-ratio: 16 / 10;
+	object-fit: contain;
+	border-radius: 0.375rem;
+	display: block;
+}
+
+.ih-card-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	aspect-ratio: 16 / 10;
+}
+
+.ih-fallback-icon {
+	color: var(--sl-color-gray-3);
+}
+
+/* --- Card body --- */
+.ih-card-body {
+	padding: 0.75rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.375rem;
+	flex: 1;
+}
+
+/* --- Compact header (CF / RC) --- */
+.ih-compact-header {
+	display: flex;
+	gap: 0.625rem;
+	align-items: flex-start;
+}
+
+.ih-compact-icon {
+	width: 36px;
+	height: 36px;
+	border-radius: 0.5rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
+	color: #fff;
+}
+
+.ih-compact-title-group {
+	flex: 1;
+	min-width: 0;
+}
+
+.ih-compact-title-row,
+.ih-image-title-row {
+	display: flex;
+	align-items: baseline;
+	gap: 0.375rem;
+	flex-wrap: wrap;
+}
+
+.ih-card-title {
+	font-size: 0.9375rem;
+	font-weight: 600;
+	margin: 0;
+	color: var(--sl-color-text);
+	line-height: 1.3;
+}
+
+.ih-card-version {
+	font-size: 0.6875rem;
+	color: var(--sl-color-gray-3);
+	white-space: nowrap;
+}
+
+.ih-card-subtitle {
+	display: block;
+	font-size: 0.75rem;
+	color: var(--sl-color-gray-3);
+}
+
+.ih-card-desc {
+	font-size: 0.8125rem;
+	color: var(--sl-color-gray-2);
+	margin: 0;
+	line-height: 1.4;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+/* --- Rule chain node pills --- */
+.ih-node-pills {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 0.25rem;
+	overflow: hidden;
+}
+
+.ih-node-pill {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.125rem 0.5rem;
+	font-size: 0.6875rem;
+	font-weight: 500;
+	border-radius: 0.25rem;
+	background: var(--sl-color-gray-6);
+	color: var(--sl-color-gray-2);
+	white-space: nowrap;
+	flex-shrink: 0;
+}
+
+.ih-node-more {
+	background: var(--sl-color-gray-6);
+	color: var(--sl-color-gray-2);
+}
+
+/* --- Chips --- */
+.ih-card-chips {
+	display: flex;
+	flex-wrap: nowrap;
+	gap: 0.25rem;
+	overflow: hidden;
+	position: relative;
+}
+
+.ih-chip-overflow {
+	color: var(--sl-color-gray-2);
+	font-size: 0.6875rem;
+}
+
+/* --- Meta row --- */
+.ih-card-meta {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 0.6875rem;
+	color: var(--sl-color-gray-3);
+	margin-top: auto;
+	padding-top: 0.375rem;
+}
+
+.ih-card-creator,
+.ih-card-installs {
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+	white-space: nowrap;
+}
+
+/* --- Chip --- */
+.ih-chip {
+	display: inline-block;
+	padding: 0.125rem 0.5rem;
+	font-size: 0.75rem;
+	font-weight: 500;
+	line-height: 1.5;
+	border-radius: 1rem;
+	background: var(--sl-color-gray-6);
+	color: var(--sl-color-gray-2);
+	white-space: nowrap;
+	flex-shrink: 0;
+}
+
+.ih-chip--pe {
+	background: var(--ih-pe-chip-bg, rgba(230, 126, 34, 0.12));
+	color: var(--ih-pe-chip-text, #c65100);
+}
+
+:root[data-theme='dark'] .ih-chip--pe {
+	--ih-pe-chip-bg: rgba(230, 81, 0, 0.15);
+	--ih-pe-chip-text: #ffb74d;
+}

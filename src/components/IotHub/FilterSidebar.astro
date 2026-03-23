@@ -1,0 +1,224 @@
+---
+import type { TemplateType } from '~/data/iot-hub/types';
+import { getLabel } from '~/data/iot-hub/constants';
+
+interface Props {
+	type: TemplateType;
+	categories: string[];
+	useCases: string[];
+	subtypes: string[];
+}
+
+const { type, categories, useCases, subtypes } = Astro.props;
+const subtypeLabels: Record<string, string> = {
+	'rule-chains': 'Rule Chain Type',
+	'calculated-fields': 'Calculated Field Type',
+	'widgets': 'Widget Type',
+	'dashboards': 'Dashboard Type',
+};
+const subtypeLabel = subtypeLabels[type] ?? 'Type';
+---
+
+<aside class="ih-filters" id="ih-filters">
+	<div class="ih-filters-top">
+		<button type="button" class="ih-filters-clear" id="ih-filters-clear" disabled>Clear all</button>
+	</div>
+
+	<!-- Search -->
+	<div class="ih-filter-group">
+		<div class="ih-search-wrap">
+			<svg class="ih-search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+			<input type="text" id="ih-search" class="ih-search-input" placeholder="Search..." autocomplete="off" />
+		</div>
+	</div>
+
+	<!-- Subtype (CF type / RC type) -->
+	{subtypes.length > 0 && (
+		<fieldset class="ih-filter-group" role="group" aria-labelledby="ih-label-subtype">
+			<legend class="ih-filter-label" id="ih-label-subtype">{subtypeLabel}</legend>
+			<div class="ih-filter-options" data-filter="subtypes">
+				{subtypes.map((st) => (
+					<label class="ih-filter-option">
+						<input type="checkbox" name="subtype" value={st} />
+						<span>{getLabel(st)}</span>
+					</label>
+				))}
+			</div>
+		</fieldset>
+	)}
+
+	<!-- Categories (type-specific) -->
+	<fieldset class="ih-filter-group" role="group" aria-labelledby="ih-label-category">
+		<legend class="ih-filter-label" id="ih-label-category">Category</legend>
+		<div class="ih-filter-options" data-filter="categories">
+			{categories.map((cat) => (
+				<label class="ih-filter-option">
+					<input type="checkbox" name="category" value={cat} />
+					<span>{getLabel(cat)}</span>
+				</label>
+			))}
+		</div>
+	</fieldset>
+
+	<!-- Use Cases (common) -->
+	<fieldset class="ih-filter-group" role="group" aria-labelledby="ih-label-usecase">
+		<legend class="ih-filter-label" id="ih-label-usecase">Use Case</legend>
+		<div class="ih-filter-options" data-filter="useCases">
+			{useCases.map((uc) => (
+				<label class="ih-filter-option">
+					<input type="checkbox" name="useCase" value={uc} />
+					<span>{getLabel(uc)}</span>
+				</label>
+			))}
+		</div>
+	</fieldset>
+
+	<!-- PE Only toggle -->
+	<div class="ih-filter-group">
+		<label class="ih-filter-option ih-filter-toggle">
+			<input type="checkbox" id="ih-pe-only" name="peOnly" />
+			<span>PE Only</span>
+		</label>
+	</div>
+</aside>
+
+<style>
+	.ih-filters {
+		width: 240px;
+		flex-shrink: 0;
+		position: sticky;
+		top: calc(var(--header-height, 80px) + 1.5rem);
+		max-height: calc(100vh - var(--header-height, 80px) - 3rem);
+		overflow-y: auto;
+		padding-right: 1rem;
+	}
+
+	.ih-filters-top {
+		display: flex;
+		justify-content: flex-end;
+		margin-bottom: 0.75rem;
+	}
+
+	.ih-filters-clear {
+		font-size: 0.75rem;
+		color: var(--sl-color-text-accent);
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: 0;
+	}
+
+	.ih-filters-clear:hover:not(:disabled) {
+		text-decoration: underline;
+	}
+
+	.ih-filters-clear:disabled {
+		color: var(--sl-color-gray-4);
+		cursor: default;
+	}
+
+	.ih-filter-group {
+		margin-bottom: 1.25rem;
+		border: none;
+		padding: 0;
+	}
+
+	.ih-filter-label {
+		display: block;
+		font-size: 0.8125rem;
+		font-weight: 600;
+		color: var(--sl-color-text);
+		margin-bottom: 0.5rem;
+	}
+
+	.ih-search-wrap {
+		position: relative;
+	}
+
+	.ih-search-icon {
+		position: absolute;
+		left: 0.625rem;
+		top: 50%;
+		transform: translateY(-50%);
+		color: var(--sl-color-gray-3);
+		pointer-events: none;
+	}
+
+	.ih-search-input {
+		width: 100%;
+		padding: 0.5rem 0.625rem 0.5rem 2rem;
+		font-size: 0.8125rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.375rem;
+		background: var(--sl-color-bg-nav);
+		color: var(--sl-color-text);
+		outline: none;
+		transition: border-color 0.15s;
+	}
+
+	.ih-search-input:focus {
+		border-color: var(--sl-color-text-accent);
+	}
+
+	.ih-filter-options {
+		display: flex;
+		flex-direction: column;
+		gap: 0.375rem;
+	}
+
+	.ih-filter-option {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.8125rem;
+		color: var(--sl-color-text);
+		cursor: pointer;
+		line-height: 1.3;
+	}
+
+	.ih-filter-option input[type='checkbox'] {
+		width: 1rem;
+		height: 1rem;
+		flex-shrink: 0;
+		accent-color: var(--sl-color-text-accent);
+		cursor: pointer;
+	}
+
+	.ih-filter-toggle {
+		padding-top: 0.25rem;
+	}
+
+	@media (max-width: 860px) {
+		.ih-filters {
+			width: 100%;
+			position: static;
+			max-height: none;
+			padding-right: 0;
+			border-bottom: 1px solid var(--sl-color-gray-5);
+			padding-bottom: 1rem;
+			margin-bottom: 1rem;
+		}
+
+		.ih-filter-options {
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: 0.5rem;
+		}
+
+		.ih-filter-option {
+			padding: 0.25rem 0.5rem;
+			border: 1px solid var(--sl-color-gray-5);
+			border-radius: 1rem;
+			font-size: 0.75rem;
+		}
+
+		.ih-filter-option:has(input:checked) {
+			border-color: var(--sl-color-text-accent);
+			background: rgba(var(--sl-color-accent-rgb, 0, 102, 204), 0.08);
+		}
+
+		.ih-filter-option input[type='checkbox'] {
+			display: none;
+		}
+	}
+</style>

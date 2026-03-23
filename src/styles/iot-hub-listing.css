@@ -1,0 +1,146 @@
+/**
+ * Shared layout styles for IoT Hub listing pages.
+ * Used by both [type]/index.astro and [type]/page/[page].astro.
+ */
+
+.ih-listing {
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 1.5rem 1.5rem 3rem;
+	padding-top: calc(var(--header-height, 80px) + 1.5rem);
+}
+
+.ih-listing-header {
+	margin: 1.5rem 0 1.25rem;
+}
+
+.ih-listing-header h1 {
+	font-size: 1.75rem;
+	font-weight: 700;
+	margin: 0;
+	color: var(--sl-color-text);
+}
+
+.ih-listing-count {
+	font-size: 0.875rem;
+	color: var(--sl-color-gray-2);
+	margin: 0.25rem 0 0;
+}
+
+.ih-listing-body {
+	display: flex;
+	gap: 1.5rem;
+	align-items: flex-start;
+}
+
+.ih-listing-main {
+	flex: 1;
+	min-width: 0;
+}
+
+.ih-card-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	gap: 1rem;
+}
+
+.ih-no-results {
+	text-align: center;
+	padding: 3rem 1rem;
+	color: var(--sl-color-gray-3);
+	font-size: 0.9375rem;
+}
+
+.ih-no-results[hidden] {
+	display: none;
+}
+
+/* Client-side pagination */
+.ih-pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0.5rem;
+	margin-top: 2rem;
+}
+
+.ih-pagination[hidden] {
+	display: none;
+}
+
+.ih-pagination .ih-page-btn {
+	display: flex;
+	align-items: center;
+	gap: 0.375rem;
+	padding: 0.375rem 0.75rem;
+	font-size: 0.875rem;
+	border: 1px solid var(--sl-color-gray-5);
+	border-radius: 0.375rem;
+	background: var(--sl-color-bg-nav);
+	color: var(--sl-color-text);
+	cursor: pointer;
+	transition: border-color 0.2s, background 0.2s;
+}
+
+.ih-pagination .ih-page-btn:hover {
+	border-color: var(--sl-color-text-accent);
+	background: var(--sl-color-gray-6);
+}
+
+.ih-pagination .ih-page-numbers {
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+}
+
+.ih-pagination .ih-page-num {
+	min-width: 2rem;
+	height: 2rem;
+	padding: 0 0.5rem;
+	font-size: 0.875rem;
+	border: 1px solid var(--sl-color-gray-5);
+	border-radius: 0.375rem;
+	background: var(--sl-color-bg-nav);
+	color: var(--sl-color-text);
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: border-color 0.2s, background 0.2s;
+}
+
+.ih-pagination .ih-page-num:hover {
+	border-color: var(--sl-color-text-accent);
+	background: var(--sl-color-gray-6);
+}
+
+.ih-pagination .ih-page-num.active {
+	background: var(--sl-color-text-accent);
+	border-color: var(--sl-color-text-accent);
+	color: var(--sl-color-bg);
+	font-weight: 600;
+	cursor: default;
+}
+
+.ih-pagination .ih-page-ellipsis {
+	padding: 0 0.25rem;
+	color: var(--sl-color-gray-3);
+}
+
+@media (max-width: 860px) {
+	.ih-listing-body {
+		flex-direction: column;
+	}
+	.ih-card-grid {
+		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	}
+}
+
+@media (max-width: 480px) {
+	.ih-pagination .ih-page-btn-text {
+		display: none;
+	}
+	.ih-pagination .ih-page-btn {
+		padding: 0.5rem;
+	}
+}

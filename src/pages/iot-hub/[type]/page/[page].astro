@@ -1,0 +1,118 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import TypeTabs from '../../../../components/IotHub/TypeTabs.astro';
+import IotHubCard from '../../../../components/IotHub/IotHubCard.astro';
+import FilterSidebar from '../../../../components/IotHub/FilterSidebar.astro';
+import Pagination from '../../../../components/IotHub/Pagination.astro';
+import { fetchAll, fetchPage, extractFilters } from '~/data/iot-hub/api';
+import {
+	TEMPLATE_TYPES,
+	typeLabels,
+	PAGE_SIZE,
+	getLabel,
+} from '~/data/iot-hub/constants';
+import type { TemplateType } from '~/data/iot-hub/types';
+import '~/styles/iot-hub-cards.css';
+import '~/styles/iot-hub-listing.css';
+
+export async function getStaticPaths() {
+	const paths: { params: { type: string; page: string } }[] = [];
+
+	for (const type of TEMPLATE_TYPES) {
+		const all = await fetchAll(type);
+		const totalPages = Math.ceil(all.length / PAGE_SIZE);
+		// Page 1 redirects to canonical [type]/index
+		paths.push({ params: { type, page: '1' } });
+		// Pages 2+
+		for (let p = 1; p < totalPages; p++) {
+			paths.push({ params: { type, page: String(p + 1) } });
+		}
+	}
+
+	return paths;
+}
+
+const { type, page: pageStr } = Astro.params as { type: TemplateType; page: string };
+
+// Page 1 → redirect to canonical URL
+if (pageStr === '1') {
+	return Astro.redirect(`/iot-hub/${type}/`);
+}
+
+const pageNum = parseInt(pageStr, 10) - 1;
+const { items, totalPages, totalElements, hasNext } = await fetchPage(type, pageNum);
+const label = typeLabels[type];
+
+const { categories, useCases, subtypes } = await extractFilters(type);
+const categoryLabels = Object.fromEntries(categories.map((c) => [c, getLabel(c)]));
+const useCaseLabels = Object.fromEntries(useCases.map((u) => [u, getLabel(u)]));
+---
+
+<BaseLayout
+	title={`${label} — Page ${pageNum + 1} — ThingsBoard IoT Hub`}
+	description={`Browse ${label.toLowerCase()} for ThingsBoard — page ${pageNum + 1} of ${totalPages}.`}
+	pageId="iot-hub"
+>
+	{pageNum > 0 && (
+		<link slot="head" rel="prev" href={pageNum === 1 ? `/iot-hub/${type}/` : `/iot-hub/${type}/page/${pageNum}/`} />
+	)}
+	{hasNext && (
+		<link slot="head" rel="next" href={`/iot-hub/${type}/page/${pageNum + 2}/`} />
+	)}
+
+	<main class="ih-listing">
+		<TypeTabs active={type} />
+
+		<div class="ih-listing-header">
+			<h1>{label}</h1>
+			<p class="ih-listing-count" id="ih-count">Page {pageNum + 1} of {totalPages} · {totalElements.toLocaleString()} {label.toLowerCase()}</p>
+		</div>
+
+		<div class="ih-listing-body">
+			<FilterSidebar type={type} categories={categories} useCases={useCases} subtypes={subtypes} />
+
+			<div class="ih-listing-main">
+				<div class="ih-card-grid" id="ih-card-grid">
+					{items.map((item) => (
+						<IotHubCard
+							id={item.id}
+							name={item.name}
+							type={item.type}
+							description={item.description}
+							imageUrl={item.imageUrl}
+							icon={item.icon}
+							color={item.color}
+							categories={item.categories}
+							useCases={item.useCases}
+							peOnly={item.peOnly}
+							creatorDisplayName={item.creatorDisplayName}
+							totalInstallCount={item.totalInstallCount}
+							dataDescriptor={item.dataDescriptor}
+							href={`/iot-hub/${type}/${item.id}/`}
+						/>
+					))}
+				</div>
+
+				<div id="ih-no-results" class="ih-no-results" hidden>
+					No items match your filters.
+				</div>
+
+				<div id="ih-pagination-wrap">
+					<Pagination currentPage={pageNum} totalPages={totalPages} baseUrl={`/iot-hub/${type}`} />
+				</div>
+
+				<nav class="ih-pagination" id="ih-client-pagination" hidden aria-label="Filtered pagination">
+				</nav>
+			</div>
+		</div>
+	</main>
+</BaseLayout>
+
+<script is:inline define:vars={{ type, PAGE_SIZE, categoryLabels, useCaseLabels }}>
+	window.__ihFilterConfig = { type: type, pageSize: PAGE_SIZE, categoryLabels: categoryLabels, useCaseLabels: useCaseLabels };
+</script>
+<script>
+	import { initIotHubFilter } from '~/scripts/iot-hub-filter';
+	const cfg = (window as any).__ihFilterConfig;
+	if (cfg) initIotHubFilter(cfg);
+</script>

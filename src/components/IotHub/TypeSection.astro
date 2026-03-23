@@ -1,0 +1,109 @@
+---
+import IotHubCard from './IotHubCard.astro';
+import type { IotHubItem, TemplateType } from '~/data/iot-hub/types';
+import { typeLabels, typeDescriptions } from '~/data/iot-hub/constants';
+
+interface Props {
+	type: TemplateType;
+	items: IotHubItem[];
+}
+
+const { type, items } = Astro.props;
+---
+
+<section class="ih-type-section">
+	<div class="ih-section-header">
+		<div>
+			<h2 class="ih-section-title">{typeLabels[type]}</h2>
+			<p class="ih-section-desc">{typeDescriptions[type]}</p>
+		</div>
+		<a href={`/iot-hub/${type}/`} class="ih-view-all">
+			View all
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+		</a>
+	</div>
+	<div class="ih-card-grid">
+		{items.map((item) => (
+			<IotHubCard
+				id={item.id}
+				name={item.name}
+				type={item.type}
+				description={item.description}
+				imageUrl={item.imageUrl}
+				icon={item.icon}
+				color={item.color}
+				categories={item.categories}
+				useCases={item.useCases}
+				peOnly={item.peOnly}
+				creatorDisplayName={item.creatorDisplayName}
+				totalInstallCount={item.totalInstallCount}
+				dataDescriptor={item.dataDescriptor}
+				href={`/iot-hub/${type}/${item.id}/`}
+			/>
+		))}
+	</div>
+</section>
+
+<style>
+	.ih-type-section {
+		padding: 2rem 0;
+	}
+
+	.ih-type-section + .ih-type-section {
+		border-top: 1px solid var(--sl-color-gray-5);
+	}
+
+	.ih-section-header {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 1.25rem;
+	}
+
+	.ih-section-title {
+		font-size: 1.375rem;
+		font-weight: 700;
+		margin: 0;
+		color: var(--sl-color-text);
+	}
+
+	.ih-section-desc {
+		font-size: 0.875rem;
+		color: var(--sl-color-gray-2);
+		margin: 0.25rem 0 0;
+	}
+
+	.ih-view-all {
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: var(--sl-color-text-accent);
+		text-decoration: none;
+		white-space: nowrap;
+		flex-shrink: 0;
+		margin-top: 0.25rem;
+	}
+
+	.ih-view-all:hover {
+		text-decoration: underline;
+	}
+
+	.ih-card-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+		gap: 1rem;
+	}
+
+	@media (max-width: 640px) {
+		.ih-section-header {
+			flex-direction: column;
+			gap: 0.5rem;
+		}
+		.ih-card-grid {
+			grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+		}
+	}
+</style>

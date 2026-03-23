@@ -1,0 +1,75 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TypeSection from '../../components/IotHub/TypeSection.astro';
+import { fetchPopular } from '~/data/iot-hub/api';
+import { TEMPLATE_TYPES } from '~/data/iot-hub/constants';
+import '~/styles/iot-hub-cards.css';
+
+const popular = await fetchPopular(4);
+---
+
+<BaseLayout
+	title="IoT Hub — ThingsBoard Marketplace"
+	description="Discover 10,000+ ready-to-use widgets, dashboards, rule chains, calculated fields, and device templates for ThingsBoard IoT platform."
+	pageId="iot-hub"
+>
+	<main class="ih-landing">
+		<section class="ih-hero">
+			<div class="ih-hero-inner">
+				<h1>IoT Hub</h1>
+				<p class="ih-hero-subtitle">
+					Discover ready-to-use templates for your ThingsBoard IoT platform.
+					Widgets, dashboards, rule chains, and more — built by the community.
+				</p>
+			</div>
+		</section>
+
+		<div class="ih-landing-content">
+			{TEMPLATE_TYPES.map((type) => (
+				<TypeSection type={type} items={popular[type]} />
+			))}
+		</div>
+	</main>
+</BaseLayout>
+
+<style>
+	.ih-landing {
+		max-width: 1280px;
+		margin: 0 auto;
+		padding: 0 1.5rem 3rem;
+		padding-top: var(--header-height, 80px);
+	}
+
+	.ih-hero {
+		padding: 3rem 0 2rem;
+		text-align: center;
+	}
+
+	.ih-hero h1 {
+		font-size: 2.5rem;
+		font-weight: 800;
+		margin: 0;
+		color: var(--sl-color-text);
+	}
+
+	.ih-hero-subtitle {
+		font-size: 1.125rem;
+		color: var(--sl-color-gray-2);
+		margin: 0.75rem auto 0;
+		max-width: 600px;
+		line-height: 1.5;
+	}
+
+	.ih-landing-content {
+		margin-top: 1rem;
+	}
+
+	@media (max-width: 640px) {
+		.ih-hero h1 {
+			font-size: 1.75rem;
+		}
+		.ih-hero-subtitle {
+			font-size: 1rem;
+		}
+	}
+</style>

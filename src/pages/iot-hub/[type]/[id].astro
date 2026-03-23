@@ -1,0 +1,136 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import DetailHero from '../../../components/IotHub/DetailHero.astro';
+import DetailContent from '../../../components/IotHub/DetailContent.astro';
+import RelatedItems from '../../../components/IotHub/RelatedItems.astro';
+import { fetchAll, fetchById, fetchReadme, HYBRID_MODE } from '~/data/iot-hub/api';
+import { TEMPLATE_TYPES, typeLabels } from '~/data/iot-hub/constants';
+import type { TemplateType, IotHubFullItem } from '~/data/iot-hub/types';
+import '~/styles/iot-hub-cards.css';
+
+export async function getStaticPaths() {
+	const BATCH_SIZE = 20;
+	const paths: { params: { type: string; id: string }; props: { item: IotHubFullItem } }[] = [];
+
+	for (const type of TEMPLATE_TYPES) {
+		const all = await fetchAll(type);
+
+		// Fetch readmes in batches to avoid overwhelming the API
+		for (let i = 0; i < all.length; i += BATCH_SIZE) {
+			const batch = all.slice(i, i + BATCH_SIZE);
+			const readmes = await Promise.all(batch.map((item) => fetchReadme(item.id)));
+			batch.forEach((item, idx) => {
+				paths.push({
+					params: { type, id: item.id },
+					props: { item: { ...item, readme: readmes[idx] || item.readme } },
+				});
+			});
+		}
+	}
+
+	return paths;
+}
+
+const { type, id } = Astro.params as { type: TemplateType; id: string };
+let { item } = Astro.props as { item: IotHubFullItem };
+
+// Phase 2 SSR fallback: if not found in static paths, fetch from API
+if (!item && HYBRID_MODE) {
+	const fetched = await fetchById(type, id);
+	if (!fetched) return Astro.redirect('/404');
+	item = fetched;
+}
+
+const label = typeLabels[type];
+const canonicalUrl = `https://thingsboard.io/iot-hub/${type}/${id}/`;
+
+// Get related items (same first category, excluding current)
+const all = await fetchAll(type);
+const related = all
+	.filter((i) => i.id !== item.id && i.categories.some((c) => item.categories.includes(c)))
+	.sort((a, b) => b.totalInstallCount - a.totalInstallCount)
+	.slice(0, 4);
+
+// JSON-LD: SoftwareApplication + BreadcrumbList
+const jsonLd = JSON.stringify([
+	{
+		'@context': 'https://schema.org',
+		'@type': 'SoftwareApplication',
+		name: item.name,
+		description: item.description,
+		applicationCategory: `IoT ${label.slice(0, -1)}`,
+		operatingSystem: 'ThingsBoard',
+		softwareVersion: item.version,
+		author: { '@type': 'Organization', name: item.creatorDisplayName },
+		offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
+		...(item.imageUrl ? { image: item.imageUrl } : {}),
+		url: canonicalUrl,
+	},
+	{
+		'@context': 'https://schema.org',
+		'@type': 'BreadcrumbList',
+		itemListElement: [
+			{ '@type': 'ListItem', position: 1, name: 'IoT Hub', item: 'https://thingsboard.io/iot-hub/' },
+			{ '@type': 'ListItem', position: 2, name: label, item: `https://thingsboard.io/iot-hub/${type}/` },
+			{ '@type': 'ListItem', position: 3, name: item.name },
+		],
+	},
+]);
+---
+
+<BaseLayout
+	title={`${item.name} — ${label} — ThingsBoard IoT Hub`}
+	description={item.description || `${item.name} — a ${label.toLowerCase().slice(0, -1)} for ThingsBoard IoT platform.`}
+	pageId="iot-hub"
+>
+	<script slot="head" type="application/ld+json" set:html={jsonLd} />
+
+	<main class="ih-detail">
+		<nav class="ih-breadcrumb" aria-label="Breadcrumb">
+			<a href="/iot-hub/">IoT Hub</a>
+			<span class="ih-bc-sep">/</span>
+			<a href={`/iot-hub/${type}/`}>{label}</a>
+			<span class="ih-bc-sep">/</span>
+			<span>{item.name}</span>
+		</nav>
+
+		<DetailHero item={item} type={type} />
+		<DetailContent item={item} />
+
+		{related.length > 0 && (
+			<RelatedItems items={related} type={type} />
+		)}
+	</main>
+</BaseLayout>
+
+<style>
+	.ih-detail {
+		max-width: 960px;
+		margin: 0 auto;
+		padding: 1.5rem 1.5rem 3rem;
+		padding-top: calc(var(--header-height, 80px) + 1.5rem);
+	}
+
+	.ih-breadcrumb {
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+		font-size: 0.8125rem;
+		color: var(--sl-color-gray-3);
+		margin-bottom: 1.5rem;
+		flex-wrap: wrap;
+	}
+
+	.ih-breadcrumb a {
+		color: var(--sl-color-text-accent);
+		text-decoration: none;
+	}
+
+	.ih-breadcrumb a:hover {
+		text-decoration: underline;
+	}
+
+	.ih-bc-sep {
+		color: var(--sl-color-gray-4);
+	}
+</style>

@@ -1,0 +1,56 @@
+---
+import IotHubCard from './IotHubCard.astro';
+import type { IotHubItem, TemplateType } from '~/data/iot-hub/types';
+
+interface Props {
+	items: IotHubItem[];
+	type: TemplateType;
+}
+
+const { items, type } = Astro.props;
+---
+
+<section class="ih-related">
+	<h2>Related {type.replace(/-/g, ' ')}</h2>
+	<div class="ih-related-grid">
+		{items.map((item) => (
+			<IotHubCard
+				id={item.id}
+				name={item.name}
+				type={item.type}
+				description={item.description}
+				imageUrl={item.imageUrl}
+				icon={item.icon}
+				color={item.color}
+				categories={item.categories}
+				useCases={item.useCases}
+				peOnly={item.peOnly}
+				creatorDisplayName={item.creatorDisplayName}
+				totalInstallCount={item.totalInstallCount}
+				dataDescriptor={item.dataDescriptor}
+				href={`/iot-hub/${type}/${item.id}/`}
+			/>
+		))}
+	</div>
+</section>
+
+<style>
+	.ih-related {
+		padding: 1.5rem 0;
+		border-top: 1px solid var(--sl-color-gray-5);
+	}
+
+	.ih-related h2 {
+		font-size: 1.125rem;
+		font-weight: 600;
+		margin: 0 0 1rem;
+		color: var(--sl-color-text);
+		text-transform: capitalize;
+	}
+
+	.ih-related-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+		gap: 1rem;
+	}
+</style>

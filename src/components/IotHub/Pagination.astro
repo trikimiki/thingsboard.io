@@ -1,0 +1,166 @@
+---
+interface Props {
+	currentPage: number;
+	totalPages: number;
+	baseUrl: string; // e.g. "/iot-hub/widgets"
+}
+
+const { currentPage, totalPages, baseUrl } = Astro.props;
+
+function pageUrl(page: number): string {
+	if (page === 0) return `${baseUrl}/`;
+	return `${baseUrl}/page/${page + 1}/`;
+}
+
+// Generate page numbers with ellipsis
+function getPageNumbers(): (number | '...')[] {
+	const pages: (number | '...')[] = [];
+	const total = totalPages;
+	const current = currentPage;
+
+	if (total <= 7) {
+		for (let i = 0; i < total; i++) pages.push(i);
+		return pages;
+	}
+
+	pages.push(0);
+
+	if (current > 3) pages.push('...');
+
+	const start = Math.max(1, current - 1);
+	const end = Math.min(total - 2, current + 1);
+	for (let i = start; i <= end; i++) pages.push(i);
+
+	if (current < total - 4) pages.push('...');
+
+	pages.push(total - 1);
+
+	return pages;
+}
+
+const pageNumbers = getPageNumbers();
+const hasPrev = currentPage > 0;
+const hasNext = currentPage < totalPages - 1;
+---
+
+{totalPages > 1 && (
+	<nav class="ih-pagination" aria-label="Pagination">
+		{hasPrev ? (
+			<a href={pageUrl(currentPage - 1)} class="ih-page-btn ih-page-prev" rel="prev">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+				<span class="ih-page-btn-text">Previous</span>
+			</a>
+		) : (
+			<span class="ih-page-btn ih-page-prev disabled" aria-disabled="true">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+				<span class="ih-page-btn-text">Previous</span>
+			</span>
+		)}
+
+		<div class="ih-page-numbers">
+			{pageNumbers.map((p) =>
+				p === '...' ? (
+					<span class="ih-page-ellipsis">…</span>
+				) : p === currentPage ? (
+					<span class="ih-page-num active" aria-current="page">{p + 1}</span>
+				) : (
+					<a href={pageUrl(p)} class="ih-page-num">{p + 1}</a>
+				)
+			)}
+		</div>
+
+		{hasNext ? (
+			<a href={pageUrl(currentPage + 1)} class="ih-page-btn ih-page-next" rel="next">
+				<span class="ih-page-btn-text">Next</span>
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+			</a>
+		) : (
+			<span class="ih-page-btn ih-page-next disabled" aria-disabled="true">
+				<span class="ih-page-btn-text">Next</span>
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+			</span>
+		)}
+	</nav>
+)}
+
+<style>
+	.ih-pagination {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		margin-top: 2rem;
+	}
+
+	.ih-page-btn {
+		display: flex;
+		align-items: center;
+		gap: 0.375rem;
+		padding: 0.375rem 0.75rem;
+		font-size: 0.875rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.375rem;
+		background: var(--sl-color-bg-nav);
+		color: var(--sl-color-text);
+		text-decoration: none;
+		transition: border-color 0.2s, background 0.2s;
+	}
+
+	a.ih-page-btn:hover {
+		border-color: var(--sl-color-text-accent);
+		background: var(--sl-color-gray-6);
+	}
+
+	.ih-page-btn.disabled {
+		opacity: 0.5;
+		cursor: default;
+	}
+
+	.ih-page-numbers {
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+	}
+
+	.ih-page-num {
+		min-width: 2rem;
+		height: 2rem;
+		padding: 0 0.5rem;
+		font-size: 0.875rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.375rem;
+		background: var(--sl-color-bg-nav);
+		color: var(--sl-color-text);
+		text-decoration: none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: border-color 0.2s, background 0.2s;
+	}
+
+	a.ih-page-num:hover {
+		border-color: var(--sl-color-text-accent);
+		background: var(--sl-color-gray-6);
+	}
+
+	.ih-page-num.active {
+		background: var(--sl-color-text-accent);
+		border-color: var(--sl-color-text-accent);
+		color: var(--sl-color-bg);
+		font-weight: 600;
+	}
+
+	.ih-page-ellipsis {
+		padding: 0 0.25rem;
+		color: var(--sl-color-gray-3);
+	}
+
+	@media (max-width: 480px) {
+		.ih-page-btn-text {
+			display: none;
+		}
+		.ih-page-btn {
+			padding: 0.5rem;
+		}
+	}
+</style>

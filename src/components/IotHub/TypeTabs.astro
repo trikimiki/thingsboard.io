@@ -1,0 +1,57 @@
+---
+import { TEMPLATE_TYPES, typeLabels } from '~/data/iot-hub/constants';
+import type { TemplateType } from '~/data/iot-hub/types';
+
+interface Props {
+	active: TemplateType;
+}
+
+const { active } = Astro.props;
+---
+
+<nav class="ih-type-tabs" aria-label="Item type navigation">
+	{TEMPLATE_TYPES.map((type) => (
+		<a
+			href={`/iot-hub/${type}/`}
+			class:list={['ih-type-tab', { active: type === active }]}
+			aria-current={type === active ? 'page' : undefined}
+		>
+			{typeLabels[type]}
+		</a>
+	))}
+</nav>
+
+<style>
+	.ih-type-tabs {
+		display: flex;
+		gap: 0.25rem;
+		border-bottom: 1px solid var(--sl-color-gray-5);
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: none;
+	}
+
+	.ih-type-tabs::-webkit-scrollbar {
+		display: none;
+	}
+
+	.ih-type-tab {
+		padding: 0.625rem 1rem;
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: var(--sl-color-gray-2);
+		text-decoration: none;
+		white-space: nowrap;
+		border-bottom: 2px solid transparent;
+		transition: color 0.15s, border-color 0.15s;
+	}
+
+	.ih-type-tab:hover {
+		color: var(--sl-color-text);
+	}
+
+	.ih-type-tab.active {
+		color: var(--sl-color-text-accent);
+		border-bottom-color: var(--sl-color-text-accent);
+	}
+</style>

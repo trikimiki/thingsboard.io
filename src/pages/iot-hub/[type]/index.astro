@@ -1,0 +1,116 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import TypeTabs from '../../../components/IotHub/TypeTabs.astro';
+import IotHubCard from '../../../components/IotHub/IotHubCard.astro';
+import FilterSidebar from '../../../components/IotHub/FilterSidebar.astro';
+import Pagination from '../../../components/IotHub/Pagination.astro';
+import { fetchPage, extractFilters } from '~/data/iot-hub/api';
+import {
+	TEMPLATE_TYPES,
+	typeLabels,
+	typeDescriptions,
+	PAGE_SIZE,
+	getLabel,
+} from '~/data/iot-hub/constants';
+import type { TemplateType } from '~/data/iot-hub/types';
+import '~/styles/iot-hub-cards.css';
+import '~/styles/iot-hub-listing.css';
+
+export async function getStaticPaths() {
+	return TEMPLATE_TYPES.map((type) => ({ params: { type } }));
+}
+
+const { type } = Astro.params as { type: TemplateType };
+const { items, totalPages, totalElements, hasNext } = await fetchPage(type, 0);
+const label = typeLabels[type];
+const description = typeDescriptions[type];
+
+// Dynamic filters from actual data
+const { categories, useCases, subtypes } = await extractFilters(type);
+const categoryLabels = Object.fromEntries(categories.map((c) => [c, getLabel(c)]));
+const useCaseLabels = Object.fromEntries(useCases.map((u) => [u, getLabel(u)]));
+
+const jsonLd = JSON.stringify([
+	{
+		'@context': 'https://schema.org',
+		'@type': 'CollectionPage',
+		name: `${label} — ThingsBoard IoT Hub`,
+		description: `Browse ${totalElements} ${label.toLowerCase()} for ThingsBoard.`,
+		url: `https://thingsboard.io/iot-hub/${type}/`,
+		numberOfItems: totalElements,
+	},
+	{
+		'@context': 'https://schema.org',
+		'@type': 'BreadcrumbList',
+		itemListElement: [
+			{ '@type': 'ListItem', position: 1, name: 'IoT Hub', item: 'https://thingsboard.io/iot-hub/' },
+			{ '@type': 'ListItem', position: 2, name: label },
+		],
+	},
+]);
+---
+
+<BaseLayout
+	title={`${label} — ThingsBoard IoT Hub`}
+	description={`Browse ${totalElements} ${label.toLowerCase()} for ThingsBoard. ${description}`}
+	pageId="iot-hub"
+>
+	<script slot="head" type="application/ld+json" set:html={jsonLd} />
+	{hasNext && <link slot="head" rel="next" href={`/iot-hub/${type}/page/2/`} />}
+
+	<main class="ih-listing">
+		<TypeTabs active={type} />
+
+		<div class="ih-listing-header">
+			<h1>{label}</h1>
+			<p class="ih-listing-count" id="ih-count">{totalElements.toLocaleString()} {label.toLowerCase()} available</p>
+		</div>
+
+		<div class="ih-listing-body">
+			<FilterSidebar type={type} categories={categories} useCases={useCases} subtypes={subtypes} />
+
+			<div class="ih-listing-main">
+				<div class="ih-card-grid" id="ih-card-grid">
+					{items.map((item) => (
+						<IotHubCard
+							id={item.id}
+							name={item.name}
+							type={item.type}
+							description={item.description}
+							imageUrl={item.imageUrl}
+							icon={item.icon}
+							color={item.color}
+							categories={item.categories}
+							useCases={item.useCases}
+							peOnly={item.peOnly}
+							creatorDisplayName={item.creatorDisplayName}
+							totalInstallCount={item.totalInstallCount}
+							dataDescriptor={item.dataDescriptor}
+							href={`/iot-hub/${type}/${item.id}/`}
+						/>
+					))}
+				</div>
+
+				<div id="ih-no-results" class="ih-no-results" hidden>
+					No items match your filters.
+				</div>
+
+				<div id="ih-pagination-wrap">
+					<Pagination currentPage={0} totalPages={totalPages} baseUrl={`/iot-hub/${type}`} />
+				</div>
+
+				<nav class="ih-pagination" id="ih-client-pagination" hidden aria-label="Filtered pagination">
+				</nav>
+			</div>
+		</div>
+	</main>
+</BaseLayout>
+
+<script is:inline define:vars={{ type, PAGE_SIZE, categoryLabels, useCaseLabels }}>
+	window.__ihFilterConfig = { type: type, pageSize: PAGE_SIZE, categoryLabels: categoryLabels, useCaseLabels: useCaseLabels };
+</script>
+<script>
+	import { initIotHubFilter } from '~/scripts/iot-hub-filter';
+	const cfg = (window as any).__ihFilterConfig;
+	if (cfg) initIotHubFilter(cfg);
+</script>

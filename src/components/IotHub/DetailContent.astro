@@ -1,0 +1,237 @@
+---
+import type { IotHubFullItem } from '~/data/iot-hub/types';
+// @ts-expect-error — marked v4 lacks type declarations
+import { marked } from 'marked';
+
+interface Props {
+	item: IotHubFullItem;
+}
+
+const { item } = Astro.props;
+
+/**
+ * Parse markdown readme into HTML at build time.
+ * Strips the leading H1 (duplicates the item name).
+ * Headings are shifted: ## → h3, ### → h4 (h2 is our "About" section heading).
+ */
+function renderReadme(readme: string): string {
+	// Strip leading H1 (title duplicate)
+	const cleaned = readme.replace(/^# .+\n?/m, '').trim();
+	if (!cleaned) return '';
+
+	// Shift headings down by 1 level so ## becomes h3 inside our h2 section
+	const shifted = cleaned.replace(/^(#{2,6})\s/gm, (_, hashes) => '#'.repeat(Math.min(hashes.length + 1, 6)) + ' ');
+
+	return marked(shifted) as string;
+}
+
+const readmeHtml = item.readme ? renderReadme(item.readme) : '';
+---
+
+<div class="ih-detail-content">
+	{readmeHtml && (
+		<section class="ih-readme">
+			<h2>About</h2>
+			<div class="ih-readme-body" set:html={readmeHtml} />
+		</section>
+	)}
+
+	{item.changelog && (
+		<section class="ih-changelog">
+			<h2>Changelog</h2>
+			<div class="ih-changelog-version">
+				<span class="ih-changelog-tag">v{item.version}</span>
+				<p>{item.changelog}</p>
+			</div>
+		</section>
+	)}
+
+	{item.creatorDescription && (
+		<section class="ih-creator-section">
+			<h2>About the Creator</h2>
+			<div class="ih-creator-info">
+				{item.creatorAvatarUrl && (
+					<img src={item.creatorAvatarUrl} alt={item.creatorDisplayName} class="ih-creator-avatar" />
+				)}
+				<div>
+					<p class="ih-creator-name">{item.creatorDisplayName}</p>
+					<p class="ih-creator-desc">{item.creatorDescription}</p>
+					{item.creatorWebsite && (
+						<a href={item.creatorWebsite} class="ih-creator-link" target="_blank" rel="noopener noreferrer">
+							{item.creatorWebsite.replace(/^https?:\/\//, '')}
+						</a>
+					)}
+				</div>
+			</div>
+		</section>
+	)}
+</div>
+
+<style>
+	.ih-detail-content {
+		margin-top: 2rem;
+	}
+
+	.ih-detail-content section {
+		padding: 1.5rem 0;
+		border-top: 1px solid var(--sl-color-gray-5);
+	}
+
+	.ih-detail-content h2 {
+		font-size: 1.125rem;
+		font-weight: 600;
+		margin: 0 0 0.75rem;
+		color: var(--sl-color-text);
+	}
+
+	.ih-readme-body {
+		font-size: 0.9375rem;
+		line-height: 1.65;
+		color: var(--sl-color-text);
+	}
+
+	.ih-readme-body :global(h3) {
+		font-size: 1rem;
+		font-weight: 600;
+		margin: 1.25rem 0 0.5rem;
+	}
+
+	.ih-readme-body :global(h4) {
+		font-size: 0.9375rem;
+		font-weight: 600;
+		margin: 1rem 0 0.375rem;
+	}
+
+	.ih-readme-body :global(p) {
+		margin: 0 0 0.75rem;
+	}
+
+	.ih-readme-body :global(ul),
+	.ih-readme-body :global(ol) {
+		margin: 0 0 0.75rem;
+		padding-left: 1.5rem;
+	}
+
+	.ih-readme-body :global(li) {
+		margin-bottom: 0.25rem;
+	}
+
+	.ih-readme-body :global(code) {
+		font-size: 0.85em;
+		padding: 0.125rem 0.375rem;
+		border-radius: 0.25rem;
+		background: var(--sl-color-gray-6);
+	}
+
+	.ih-readme-body :global(pre) {
+		padding: 1rem;
+		border-radius: 0.5rem;
+		background: var(--sl-color-gray-6);
+		overflow-x: auto;
+		margin: 0 0 0.75rem;
+	}
+
+	.ih-readme-body :global(pre code) {
+		padding: 0;
+		background: none;
+	}
+
+	.ih-readme-body :global(a) {
+		color: var(--sl-color-text-accent);
+		text-decoration: none;
+	}
+
+	.ih-readme-body :global(a:hover) {
+		text-decoration: underline;
+	}
+
+	.ih-readme-body :global(blockquote) {
+		margin: 0 0 0.75rem;
+		padding: 0.5rem 1rem;
+		border-left: 3px solid var(--sl-color-gray-4);
+		color: var(--sl-color-gray-2);
+	}
+
+	.ih-readme-body :global(img) {
+		max-width: 100%;
+		height: auto;
+		border-radius: 0.375rem;
+	}
+
+	.ih-readme-body :global(table) {
+		width: 100%;
+		border-collapse: collapse;
+		margin: 0 0 0.75rem;
+		font-size: 0.875rem;
+	}
+
+	.ih-readme-body :global(th),
+	.ih-readme-body :global(td) {
+		padding: 0.5rem 0.75rem;
+		border: 1px solid var(--sl-color-gray-5);
+		text-align: left;
+	}
+
+	.ih-readme-body :global(th) {
+		background: var(--sl-color-gray-6);
+		font-weight: 600;
+	}
+
+	.ih-changelog-version {
+		display: flex;
+		align-items: baseline;
+		gap: 0.75rem;
+	}
+
+	.ih-changelog-tag {
+		display: inline-block;
+		padding: 0.125rem 0.5rem;
+		font-size: 0.75rem;
+		font-weight: 600;
+		border-radius: 0.25rem;
+		background: var(--sl-color-gray-6);
+		color: var(--sl-color-text);
+		white-space: nowrap;
+	}
+
+	.ih-changelog-version p {
+		font-size: 0.875rem;
+		color: var(--sl-color-gray-2);
+		margin: 0;
+	}
+
+	.ih-creator-info {
+		display: flex;
+		gap: 1rem;
+		align-items: flex-start;
+	}
+
+	.ih-creator-avatar {
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		flex-shrink: 0;
+	}
+
+	.ih-creator-name {
+		font-weight: 600;
+		margin: 0;
+		color: var(--sl-color-text);
+	}
+
+	.ih-creator-desc {
+		font-size: 0.875rem;
+		color: var(--sl-color-gray-2);
+		margin: 0.25rem 0 0;
+	}
+
+	.ih-creator-link {
+		font-size: 0.8125rem;
+		color: var(--sl-color-text-accent);
+		text-decoration: none;
+	}
+
+	.ih-creator-link:hover {
+		text-decoration: underline;
+	}
+</style>

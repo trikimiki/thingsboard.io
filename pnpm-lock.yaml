@@ -1,4 +1,4 @@
-lockfileVersion: '9.0'
+flockfileVersion: '9.0'
 
 settings:
   autoInstallPeers: true
@@ -32,6 +32,9 @@ importers:
       jsdoc-api:
         specifier: ^9.3.5
         version: 9.3.5
+      marked:
+        specifier: ^4.0.12
+        version: 4.0.12
       rehype-slug:
         specifier: ^6.0.0
         version: 6.0.0
