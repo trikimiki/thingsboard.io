@@ -31,6 +31,10 @@ pnpm format           # Format with Prettier
 # Content generation (pulls from withastro/astro repo)
 pnpm docgen           # Generate configuration reference
 pnpm docgen:errors    # Generate error reference
+
+# IoT Hub data
+pnpm iot-hub:fetch    # Fetch IoT Hub data from API → src/data/iot-hub/iot-hub-data.json
+                      # Build uses cached JSON by default; set IOT_HUB_FETCH=true for live API
 ```
 
 ## Architecture

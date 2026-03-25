@@ -1,0 +1,1801 @@
+{
+	"fetchedAt": "2026-03-25T17:12:24.705Z",
+	"widgets": [
+		{
+			"id": "f43a4070-1e19-11f1-8215-b3b187cfe311",
+			"name": "Real-Time Temperature Chart",
+			"type": "widgets",
+			"description": "Real-time temperature monitoring line chart with min/max bands and anomaly highlighting",
+			"categories": [
+				"CHARTS_GRAPHS"
+			],
+			"useCases": [
+				"SMART_HOME",
+				"INDUSTRIAL_IOT"
+			],
+			"tags": [
+				"temperature",
+				"monitoring",
+				"chart"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f43adcb0-1e19-11f1-8215-b3b187cfe311?v=6de7cc1c2cb80996261026f5c0adfd95f39fb9e370b1646cad95b9316ea308d0",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 2,
+			"version": "1.0.0",
+			"publishedTime": 1773323224601,
+			"readme": "# Real-Time Temperature Chart\n\n## Overview\nReal-time temperature monitoring line chart with min/max bands and anomaly highlighting\n\n## Features\n- Real-time data visualization\n- Configurable thresholds and alerts\n- Responsive layout for all screen sizes\n- Dark and light theme support\n\n## Configuration\n1. Add the widget to your dashboard\n2. Configure the data source\n3. Set thresholds and display options\n\n## Compatibility\nThingsBoard 4.2.0+",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"fqn": "com.iothub.widget.temperature_chart",
+				"name": "Real-Time Temperature Chart",
+				"type": "WIDGET",
+				"image": null,
+				"scada": false,
+				"widgetType": "timeseries",
+				"description": "Real-time temperature monitoring line chart with min/max bands and anomaly highlighting"
+			}
+		},
+		{
+			"id": "f444eed0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Multi-Sensor Trend Graph",
+			"type": "widgets",
+			"description": "Multi-axis time series graph supporting up to 8 data sources with configurable aggregation",
+			"categories": [
+				"CHARTS_GRAPHS"
+			],
+			"useCases": [
+				"INDUSTRIAL_IOT",
+				"ENERGY_MANAGEMENT"
+			],
+			"tags": [
+				"multi-sensor",
+				"trend",
+				"timeseries"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f445d930-1e19-11f1-8215-b3b187cfe311?v=584e46c52448a79b28959e802ec7b639df2f6cc8440fbc2944387a30c887162e",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323224668,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"fqn": "com.iothub.widget.multi_sensor_trend",
+				"name": "Multi-Sensor Trend Graph",
+				"type": "WIDGET",
+				"image": null,
+				"scada": false,
+				"widgetType": "timeseries",
+				"description": "Multi-axis time series graph supporting up to 8 data sources with configurable aggregation"
+			}
+		},
+		{
+			"id": "f458c4f0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Energy Consumption Graph",
+			"type": "widgets",
+			"description": "Stacked area chart for energy consumption by source with daily cost estimation",
+			"categories": [
+				"CHARTS_GRAPHS"
+			],
+			"useCases": [
+				"ENERGY_MANAGEMENT",
+				"SMART_CITY"
+			],
+			"tags": [
+				"energy",
+				"consumption",
+				"chart"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f4598840-1e19-11f1-8215-b3b187cfe311?v=e99caef09687bdc58ce9bda0fcd11a479ae75046b17e4ffea9d9c10945eb22b4",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323224801,
+			"readme": "# Energy Consumption Graph\n\n## Overview\nStacked area chart for energy consumption by source with daily cost estimation\n\n## Features\n- Real-time data visualization\n- Configurable thresholds and alerts\n- Responsive layout for all screen sizes\n- Dark and light theme support\n\n## Configuration\n1. Add the widget to your dashboard\n2. Configure the data source\n3. Set thresholds and display options\n\n## Compatibility\nThingsBoard 4.4.0+",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"fqn": "com.iothub.widget.energy_consumption",
+				"name": "Energy Consumption Graph",
+				"type": "WIDGET",
+				"image": null,
+				"scada": false,
+				"widgetType": "timeseries",
+				"description": "Stacked area chart for energy consumption by source with daily cost estimation"
+			}
+		},
+		{
+			"id": "f4639a60-1e19-11f1-8215-b3b187cfe311",
+			"name": "Digital Gauge Display",
+			"type": "widgets",
+			"description": "High-contrast digital gauge showing current value with configurable thresholds and units",
+			"categories": [
+				"GAUGES_INDICATORS"
+			],
+			"useCases": [
+				"INDUSTRIAL_IOT",
+				"ENERGY_MANAGEMENT"
+			],
+			"tags": [
+				"gauge",
+				"digital",
+				"value"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f4645db0-1e19-11f1-8215-b3b187cfe311?v=095a26f2ff5c0c57e985616f0b4746e92fb16254c41c788d9e3bd504e89cd53d",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323224868,
+			"readme": "# Digital Gauge Display\n\n## Overview\nHigh-contrast digital gauge showing current value with configurable thresholds and units\n\n## Features\n- Real-time data visualization\n- Configurable thresholds and alerts\n- Responsive layout for all screen sizes\n- Dark and light theme support\n\n## Configuration\n1. Add the widget to your dashboard\n2. Configure the data source\n3. Set thresholds and display options\n\n## Compatibility\nThingsBoard 4.2.0+",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"fqn": "com.iothub.widget.digital_gauge",
+				"name": "Digital Gauge Display",
+				"type": "WIDGET",
+				"image": null,
+				"scada": false,
+				"widgetType": "latest",
+				"description": "High-contrast digital gauge showing current value with configurable thresholds and units"
+			}
+		},
+		{
+			"id": "f482e230-1e19-11f1-8215-b3b187cfe311",
+			"name": "Air Quality Index Card",
+			"type": "widgets",
+			"description": "Color-coded AQI display with PM2.5, PM10, O3 sub-indices and health recommendations",
+			"categories": [
+				"CARDS_INFO"
+			],
+			"useCases": [
+				"SMART_CITY",
+				"HEALTHCARE"
+			],
+			"tags": [
+				"air-quality",
+				"aqi",
+				"environment"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f4837e70-1e19-11f1-8215-b3b187cfe311?v=b02cae12a8573ae2336ccef0c8ccfafbdab57da7dc2d2a1c38ff46caa4b54baf",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323225075,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"fqn": "com.iothub.widget.aqi_card",
+				"name": "Air Quality Index Card",
+				"type": "WIDGET",
+				"image": null,
+				"scada": false,
+				"widgetType": "latest",
+				"description": "Color-coded AQI display with PM2.5, PM10, O3 sub-indices and health recommendations"
+			}
+		},
+		{
+			"id": "f476d440-1e19-11f1-8215-b3b187cfe311",
+			"name": "KPI Summary Tile",
+			"type": "widgets",
+			"description": "Key performance indicator tile with trend arrow, sparkline, and percentage change",
+			"categories": [
+				"CARDS_INFO"
+			],
+			"useCases": [
+				"INDUSTRIAL_IOT",
+				"RETAIL"
+			],
+			"tags": [
+				"kpi",
+				"summary",
+				"tile"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f477bea0-1e19-11f1-8215-b3b187cfe311?v=f2c9d7000279bcc944ddbc551ff28dd01e014922d61cc36e4403a0fb228a4107",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323225003,
+			"readme": "# KPI Summary Tile\n\n## Overview\nKey performance indicator tile with trend arrow, sparkline, and percentage change\n\n## Features\n- Real-time data visualization\n- Configurable thresholds and alerts\n- Responsive layout for all screen sizes\n- Dark and light theme support\n\n## Configuration\n1. Add the widget to your dashboard\n2. Configure the data source\n3. Set thresholds and display options\n\n## Compatibility\nThingsBoard 4.3.0+",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"fqn": "com.iothub.widget.kpi_tile",
+				"name": "KPI Summary Tile",
+				"type": "WIDGET",
+				"image": null,
+				"scada": false,
+				"widgetType": "latest",
+				"description": "Key performance indicator tile with trend arrow, sparkline, and percentage change"
+			}
+		},
+		{
+			"id": "f46d1040-1e19-11f1-8215-b3b187cfe311",
+			"name": "Device Status Card",
+			"type": "widgets",
+			"description": "Compact device status overview showing online/offline state, battery level and signal strength",
+			"categories": [
+				"CARDS_INFO"
+			],
+			"useCases": [
+				"SMART_HOME",
+				"FLEET_MANAGEMENT"
+			],
+			"tags": [
+				"device",
+				"status",
+				"card"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f46dd390-1e19-11f1-8215-b3b187cfe311?v=b02cae12a8573ae2336ccef0c8ccfafbdab57da7dc2d2a1c38ff46caa4b54baf",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323224928,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"fqn": "com.iothub.widget.device_status_card",
+				"name": "Device Status Card",
+				"type": "WIDGET",
+				"image": null,
+				"scada": false,
+				"widgetType": "latest",
+				"description": "Compact device status overview showing online/offline state, battery level and signal strength"
+			}
+		},
+		{
+			"id": "f44f00f0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Humidity Timeline Widget",
+			"type": "widgets",
+			"description": "Humidity data timeline with color-coded zones and daily averages overlay",
+			"categories": [
+				"CHARTS_GRAPHS"
+			],
+			"useCases": [
+				"AGRICULTURE",
+				"SMART_HOME"
+			],
+			"tags": [
+				"humidity",
+				"timeline"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f44fc440-1e19-11f1-8215-b3b187cfe311?v=251e2f7101947a7e12fa8bdb273c081d1f4f2802dc870b5f44cc3e647dba3245",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323224733,
+			"readme": "# Humidity Timeline Widget\n\n## Overview\nHumidity data timeline with color-coded zones and daily averages overlay\n\n## Features\n- Real-time data visualization\n- Configurable thresholds and alerts\n- Responsive layout for all screen sizes\n- Dark and light theme support\n\n## Configuration\n1. Add the widget to your dashboard\n2. Configure the data source\n3. Set thresholds and display options\n\n## Compatibility\nThingsBoard 4.3.0+",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"fqn": "com.iothub.widget.humidity_timeline",
+				"name": "Humidity Timeline Widget",
+				"type": "WIDGET",
+				"image": null,
+				"scada": false,
+				"widgetType": "timeseries",
+				"description": "Humidity data timeline with color-coded zones and daily averages overlay"
+			}
+		},
+		{
+			"id": "f4ac3c20-1e19-11f1-8215-b3b187cfe311",
+			"name": "Critical Alert Badge",
+			"type": "widgets",
+			"description": "Compact alert counter badge with severity-coded colors and click-to-detail navigation",
+			"categories": [
+				"CARDS_INFO"
+			],
+			"useCases": [
+				"INDUSTRIAL_IOT",
+				"HEALTHCARE"
+			],
+			"tags": [
+				"alert",
+				"badge",
+				"critical"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f4acff70-1e19-11f1-8215-b3b187cfe311?v=36d84d0ba57962850e3b0a0df01a7202e1fa53edff5294dbf3602dc20fcfeaa0",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323225346,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"fqn": "com.iothub.widget.critical_alert_badge",
+				"name": "Critical Alert Badge",
+				"type": "WIDGET",
+				"image": null,
+				"scada": false,
+				"widgetType": "alarm",
+				"description": "Compact alert counter badge with severity-coded colors and click-to-detail navigation"
+			}
+		},
+		{
+			"id": "f4a1dbe0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Alarm Timeline Panel",
+			"type": "widgets",
+			"description": "Scrollable alarm timeline showing severity, acknowledgment status, and resolution actions",
+			"categories": [
+				"TABLES_LISTS"
+			],
+			"useCases": [
+				"INDUSTRIAL_IOT",
+				"SMART_CITY"
+			],
+			"tags": [
+				"alarm",
+				"timeline",
+				"severity"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f4a27820-1e19-11f1-8215-b3b187cfe311?v=7d897c20e76e3d03709994217c932e8bf518723af9540e1b986e7a45db9223db",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323225276,
+			"readme": "# Alarm Timeline Panel\n\n## Overview\nScrollable alarm timeline showing severity, acknowledgment status, and resolution actions\n\n## Features\n- Real-time data visualization\n- Configurable thresholds and alerts\n- Responsive layout for all screen sizes\n- Dark and light theme support\n\n## Configuration\n1. Add the widget to your dashboard\n2. Configure the data source\n3. Set thresholds and display options\n\n## Compatibility\nThingsBoard 4.2.0+",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"fqn": "com.iothub.widget.alarm_timeline",
+				"name": "Alarm Timeline Panel",
+				"type": "WIDGET",
+				"image": null,
+				"scada": false,
+				"widgetType": "alarm",
+				"description": "Scrollable alarm timeline showing severity, acknowledgment status, and resolution actions"
+			}
+		},
+		{
+			"id": "f4977ba0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Thermostat Controller",
+			"type": "widgets",
+			"description": "Thermostat dial interface for setting target temperature with mode selection",
+			"categories": [
+				"CONTROLS"
+			],
+			"useCases": [
+				"SMART_HOME",
+				"ENERGY_MANAGEMENT"
+			],
+			"tags": [
+				"thermostat",
+				"temperature",
+				"control"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f4983ef0-1e19-11f1-8215-b3b187cfe311?v=281a1281cce2205702087278c1fd446f502a74204fde8acacc65e37e02480ef9",
+			"peOnly": true,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323225208,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"fqn": "com.iothub.widget.thermostat_ctrl",
+				"name": "Thermostat Controller",
+				"type": "WIDGET",
+				"image": null,
+				"scada": false,
+				"widgetType": "rpc",
+				"description": "Thermostat dial interface for setting target temperature with mode selection"
+			}
+		},
+		{
+			"id": "f4b6c370-1e19-11f1-8215-b3b187cfe311",
+			"name": "Floor Plan Navigator",
+			"type": "widgets",
+			"description": "Interactive SVG floor plan overlay with device placement pins and zone highlighting",
+			"categories": [
+				"MAPS_LOCATION",
+				"SCADA"
+			],
+			"useCases": [
+				"SMART_HOME",
+				"RETAIL"
+			],
+			"tags": [
+				"floor-plan",
+				"map",
+				"indoor"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f4b786c0-1e19-11f1-8215-b3b187cfe311?v=3a16dea7e157217e337d5e58a9c44a3ee204a80f9b837e7c8e0535f45e92bdc5",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323225412,
+			"readme": "# Floor Plan Navigator\n\n## Overview\nInteractive SVG floor plan overlay with device placement pins and zone highlighting\n\n## Features\n- Real-time data visualization\n- Configurable thresholds and alerts\n- Responsive layout for all screen sizes\n- Dark and light theme support\n\n## Configuration\n1. Add the widget to your dashboard\n2. Configure the data source\n3. Set thresholds and display options\n\n## Compatibility\nThingsBoard 4.2.0+",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"fqn": "com.iothub.widget.floor_plan",
+				"name": "Floor Plan Navigator",
+				"type": "WIDGET",
+				"image": null,
+				"scada": false,
+				"widgetType": "static",
+				"description": "Interactive SVG floor plan overlay with device placement pins and zone highlighting"
+			}
+		},
+		{
+			"id": "f4c2d160-1e19-11f1-8215-b3b187cfe311",
+			"name": "Company Logo Banner",
+			"type": "widgets",
+			"description": "Customizable branded banner with logo upload, accent color, and tagline support",
+			"categories": [
+				"CARDS_INFO"
+			],
+			"useCases": [
+				"SMART_HOME",
+				"RETAIL"
+			],
+			"tags": [
+				"logo",
+				"banner",
+				"branding"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f4c3e2d0-1e19-11f1-8215-b3b187cfe311?v=bd39ec4fc705b43a2e260bfe808a4499ef546ef2b0c708328aa587beff598acb",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323225497,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"fqn": "com.iothub.widget.logo_banner",
+				"name": "Company Logo Banner",
+				"type": "WIDGET",
+				"image": null,
+				"scada": false,
+				"widgetType": "static",
+				"description": "Customizable branded banner with logo upload, accent color, and tagline support"
+			}
+		},
+		{
+			"id": "f48d9090-1e19-11f1-8215-b3b187cfe311",
+			"name": "Remote Switch Control",
+			"type": "widgets",
+			"description": "Toggle switch for remote device control with confirmation dialog and state feedback",
+			"categories": [
+				"CONTROLS"
+			],
+			"useCases": [
+				"SMART_HOME",
+				"INDUSTRIAL_IOT"
+			],
+			"tags": [
+				"switch",
+				"control",
+				"rpc"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f48e53e0-1e19-11f1-8215-b3b187cfe311?v=82027ffff629e38a179ba50c673bd0f03d723baf58af59ffaa0679609f942fb4",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323225146,
+			"readme": "# Remote Switch Control\n\n## Overview\nToggle switch for remote device control with confirmation dialog and state feedback\n\n## Features\n- Real-time data visualization\n- Configurable thresholds and alerts\n- Responsive layout for all screen sizes\n- Dark and light theme support\n\n## Configuration\n1. Add the widget to your dashboard\n2. Configure the data source\n3. Set thresholds and display options\n\n## Compatibility\nThingsBoard 4.2.0+",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"fqn": "com.iothub.widget.remote_switch",
+				"name": "Remote Switch Control",
+				"type": "WIDGET",
+				"image": null,
+				"scada": false,
+				"widgetType": "rpc",
+				"description": "Toggle switch for remote device control with confirmation dialog and state feedback"
+			}
+		}
+	],
+	"dashboards": [
+		{
+			"id": "f4f74ee0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Agricultural Field Monitor",
+			"type": "dashboards",
+			"description": "Precision agriculture dashboard with soil moisture maps, weather integration, and crop health indicators",
+			"categories": [
+				"ANALYTICS",
+				"MONITORING"
+			],
+			"useCases": [
+				"AGRICULTURE",
+				"WATER_UTILITIES"
+			],
+			"tags": [
+				"agriculture",
+				"soil",
+				"irrigation"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f4f83940-1e19-11f1-8215-b3b187cfe311?v=0e5d2a2a9bac1549c2899428d409b13adc5babab12be330746d5fb654c5c20a6",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323225842,
+			"readme": "# Agricultural Field Monitor\n\n## Overview\nPrecision agriculture dashboard with soil moisture maps, weather integration, and crop health indicators\n\n## Widgets Included\n- Real-time telemetry charts\n- Status monitoring panels\n- Alert management table\n\n## Setup\n1. Import the dashboard JSON\n2. Configure device entity aliases\n3. Adjust widget data sources\n\n## Requirements\n- ThingsBoard 4.4.0+\n- At least one configured device",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"type": "DASHBOARD",
+				"image": null,
+				"title": "Agricultural Field Monitor",
+				"description": "Precision agriculture dashboard with soil moisture maps, weather integration, and crop health indicators"
+			}
+		},
+		{
+			"id": "f4e28e60-1e19-11f1-8215-b3b187cfe311",
+			"name": "Fleet Operations Center",
+			"type": "dashboards",
+			"description": "Fleet management command center with live vehicle tracking, route optimization, and maintenance scheduling",
+			"categories": [
+				"OPERATIONS",
+				"MONITORING"
+			],
+			"useCases": [
+				"FLEET_MANAGEMENT"
+			],
+			"tags": [
+				"fleet",
+				"tracking",
+				"operations"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f4e351b0-1e19-11f1-8215-b3b187cfe311?v=e657afa2dbf043c824eafce93080c4fe186950167113500a8c57d0d30704655e",
+			"peOnly": true,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323225700,
+			"readme": "# Fleet Operations Center\n\n## Overview\nFleet management command center with live vehicle tracking, route optimization, and maintenance scheduling\n\n## Widgets Included\n- Real-time telemetry charts\n- Status monitoring panels\n- Alert management table\n\n## Setup\n1. Import the dashboard JSON\n2. Configure device entity aliases\n3. Adjust widget data sources\n\n## Requirements\n- ThingsBoard 4.2.0+\n- At least one configured device",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"type": "DASHBOARD",
+				"image": null,
+				"title": "Fleet Operations Center",
+				"description": "Fleet management command center with live vehicle tracking, route optimization, and maintenance scheduling"
+			}
+		},
+		{
+			"id": "f4ce1c00-1e19-11f1-8215-b3b187cfe311",
+			"name": "IoT Device Monitoring Dashboard",
+			"type": "dashboards",
+			"description": "Comprehensive device monitoring dashboard with real-time telemetry, device status grid, and configurable alerting thresholds",
+			"categories": [
+				"MONITORING"
+			],
+			"useCases": [
+				"INDUSTRIAL_IOT",
+				"SMART_CITY"
+			],
+			"tags": [
+				"monitoring",
+				"devices",
+				"real-time"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f4cedf50-1e19-11f1-8215-b3b187cfe311?v=47a772b451356d0dbfea2a7f000ad81ec4f9f48b184009474701a40356f92489",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323225567,
+			"readme": "# IoT Device Monitoring Dashboard\n\n## Overview\nComprehensive device monitoring dashboard with real-time telemetry, device status grid, and configurable alerting thresholds\n\n## Widgets Included\n- Real-time telemetry charts\n- Status monitoring panels\n- Alert management table\n\n## Setup\n1. Import the dashboard JSON\n2. Configure device entity aliases\n3. Adjust widget data sources\n\n## Requirements\n- ThingsBoard 4.2.0+\n- At least one configured device",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"type": "DASHBOARD",
+				"image": null,
+				"title": "IoT Device Monitoring",
+				"description": "Comprehensive device monitoring dashboard with real-time telemetry, device status grid, and configurable alerting thresholds"
+			}
+		},
+		{
+			"id": "f4d8ca60-1e19-11f1-8215-b3b187cfe311",
+			"name": "Energy Analytics Dashboard",
+			"type": "dashboards",
+			"description": "Advanced energy analytics dashboard featuring consumption patterns, cost projections, and renewable energy tracking",
+			"categories": [
+				"ANALYTICS"
+			],
+			"useCases": [
+				"ENERGY_MANAGEMENT",
+				"SMART_CITY"
+			],
+			"tags": [
+				"energy",
+				"analytics",
+				"consumption"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f4d9b4c0-1e19-11f1-8215-b3b187cfe311?v=8b97314f134d465e01d028f5d708b8a2e6868eba3306568032224db3a3e8c782",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323225635,
+			"readme": "# Energy Analytics Dashboard\n\n## Overview\nAdvanced energy analytics dashboard featuring consumption patterns, cost projections, and renewable energy tracking\n\n## Widgets Included\n- Real-time telemetry charts\n- Status monitoring panels\n- Alert management table\n\n## Setup\n1. Import the dashboard JSON\n2. Configure device entity aliases\n3. Adjust widget data sources\n\n## Requirements\n- ThingsBoard 4.3.0+\n- At least one configured device",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"type": "DASHBOARD",
+				"image": null,
+				"title": "Energy Analytics",
+				"description": "Advanced energy analytics dashboard featuring consumption patterns, cost projections, and renewable energy tracking"
+			}
+		},
+		{
+			"id": "f4ec5260-1e19-11f1-8215-b3b187cfe311",
+			"name": "Smart Building Overview",
+			"type": "dashboards",
+			"description": "Building management system dashboard showing HVAC status, occupancy heatmaps, and energy usage per floor",
+			"categories": [
+				"OVERVIEW",
+				"MONITORING"
+			],
+			"useCases": [
+				"SMART_HOME",
+				"ENERGY_MANAGEMENT"
+			],
+			"tags": [
+				"building",
+				"hvac",
+				"occupancy"
+			],
+			"imageUrl": "http://10.7.2.165:8090/api/resources/f4ecc790-1e19-11f1-8215-b3b187cfe311?v=0b69231ae47d6b98e2439dd782f1dd1259948c4c98add29ab7acb9e5c84e92ca",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323225769,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"type": "DASHBOARD",
+				"image": null,
+				"title": "Smart Building Overview",
+				"description": "Building management system dashboard showing HVAC status, occupancy heatmaps, and energy usage per floor"
+			}
+		}
+	],
+	"calculated-fields": [
+		{
+			"id": "82d970e0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Dew Point Calculator",
+			"type": "calculated-fields",
+			"description": "Computes dew point temperature from humidity and temperature using Magnus formula",
+			"categories": [
+				"ENVIRONMENTAL"
+			],
+			"useCases": [
+				"AGRICULTURE",
+				"SMART_HOME"
+			],
+			"tags": [
+				"dew-point",
+				"humidity",
+				"weather"
+			],
+			"icon": "water_drop",
+			"color": "#3B82F6",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323034380,
+			"readme": "# Dew Point Calculator\\n\\n## Overview\\nComputes dew point temperature from humidity and temperature using Magnus formula\\n\\n## Configuration\\n- **Type**: SCRIPT\\n- **Input Keys**: temperature, humidity\\n- **Output Key**: dewPoint\\n\\n## Usage\\n1. Assign the calculated field to your device profile\\n2. Configure input telemetry keys\\n3. The output key will be computed automatically",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "dewPoint",
+				"type": "CALCULATED_FIELD",
+				"cfType": "SCRIPT"
+			}
+		},
+		{
+			"id": "82c3ed10-1e19-11f1-8215-b3b187cfe311",
+			"name": "Temperature Unit Converter",
+			"type": "calculated-fields",
+			"description": "Converts temperature values between Celsius, Fahrenheit, and Kelvin units automatically",
+			"categories": [
+				"CUSTOM_FORMULA"
+			],
+			"useCases": [
+				"SMART_HOME",
+				"INDUSTRIAL_IOT"
+			],
+			"tags": [
+				"temperature",
+				"conversion",
+				"units"
+			],
+			"icon": "thermostat",
+			"color": "#EF4444",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323034252,
+			"readme": "# Temperature Unit Converter\\n\\n## Overview\\nConverts temperature values between Celsius, Fahrenheit, and Kelvin units automatically\\n\\n## Configuration\\n- **Type**: SIMPLE\\n- **Input Keys**: temperature, humidity\\n- **Output Key**: temperatureConverter\\n\\n## Usage\\n1. Assign the calculated field to your device profile\\n2. Configure input telemetry keys\\n3. The output key will be computed automatically",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "temperatureConverter",
+				"type": "CALCULATED_FIELD",
+				"cfType": "SIMPLE"
+			}
+		},
+		{
+			"id": "82ec5ca0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Geofence Zone Detector",
+			"type": "calculated-fields",
+			"description": "Detects whether a device GPS position is inside or outside defined geofence polygon zones",
+			"categories": [
+				"GEOSPATIAL"
+			],
+			"useCases": [
+				"FLEET_MANAGEMENT",
+				"SMART_CITY"
+			],
+			"tags": [
+				"geofence",
+				"gps",
+				"zone"
+			],
+			"icon": "location_on",
+			"color": "#10B981",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323034506,
+			"readme": "# Geofence Zone Detector\\n\\n## Overview\\nDetects whether a device GPS position is inside or outside defined geofence polygon zones\\n\\n## Configuration\\n- **Type**: GEOFENCING\\n- **Input Keys**: temperature, humidity\\n- **Output Key**: geofenceZone\\n\\n## Usage\\n1. Assign the calculated field to your device profile\\n2. Configure input telemetry keys\\n3. The output key will be computed automatically",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "geofenceZone",
+				"type": "CALCULATED_FIELD",
+				"cfType": "GEOFENCING"
+			}
+		},
+		{
+			"id": "82cface0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Power Factor Calculator",
+			"type": "calculated-fields",
+			"description": "Calculates power factor from voltage, current, and active power telemetry",
+			"categories": [
+				"ENERGY"
+			],
+			"useCases": [
+				"ENERGY_MANAGEMENT",
+				"INDUSTRIAL_IOT"
+			],
+			"tags": [
+				"power",
+				"factor",
+				"electrical"
+			],
+			"icon": "calculate",
+			"color": "#F59E0B",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323034316,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "powerFactor",
+				"type": "CALCULATED_FIELD",
+				"cfType": "SIMPLE"
+			}
+		},
+		{
+			"id": "82e2e6c0-1e19-11f1-8215-b3b187cfe311",
+			"name": "OEE Efficiency Score",
+			"type": "calculated-fields",
+			"description": "Overall Equipment Effectiveness calculation combining availability, performance, and quality rates",
+			"categories": [
+				"STATISTICAL"
+			],
+			"useCases": [
+				"INDUSTRIAL_IOT"
+			],
+			"tags": [
+				"oee",
+				"efficiency",
+				"manufacturing"
+			],
+			"icon": "speed",
+			"color": "#8B5CF6",
+			"peOnly": true,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323034441,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "oeeScore",
+				"type": "CALCULATED_FIELD",
+				"cfType": "SCRIPT"
+			}
+		},
+		{
+			"id": "82f695d0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Distance to Base Calculator",
+			"type": "calculated-fields",
+			"description": "Calculates straight-line distance from device location to configured base station coordinates",
+			"categories": [
+				"GEOSPATIAL"
+			],
+			"useCases": [
+				"FLEET_MANAGEMENT"
+			],
+			"tags": [
+				"distance",
+				"gps",
+				"base-station"
+			],
+			"icon": "straighten",
+			"color": "#06B6D4",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323034569,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "distanceToBase",
+				"type": "CALCULATED_FIELD",
+				"cfType": "GEOFENCING"
+			}
+		},
+		{
+			"id": "831604b0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Telemetry Relay to Parent",
+			"type": "calculated-fields",
+			"description": "Propagates selected telemetry keys from child devices to parent asset with configurable mapping",
+			"categories": [
+				"AGGREGATION"
+			],
+			"useCases": [
+				"INDUSTRIAL_IOT",
+				"SMART_CITY"
+			],
+			"tags": [
+				"propagation",
+				"relay",
+				"parent"
+			],
+			"icon": "swap_vert",
+			"color": "#6366F1",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323034776,
+			"readme": "# Telemetry Relay to Parent\\n\\n## Overview\\nPropagates selected telemetry keys from child devices to parent asset with configurable mapping\\n\\n## Configuration\\n- **Type**: PROPAGATION\\n- **Input Keys**: temperature, humidity\\n- **Output Key**: telemetryRelay\\n\\n## Usage\\n1. Assign the calculated field to your device profile\\n2. Configure input telemetry keys\\n3. The output key will be computed automatically",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "telemetryRelay",
+				"type": "CALCULATED_FIELD",
+				"cfType": "PROPAGATION"
+			}
+		},
+		{
+			"id": "82ffbd90-1e19-11f1-8215-b3b187cfe311",
+			"name": "High Temperature Alarm",
+			"type": "calculated-fields",
+			"description": "Triggers alarm when temperature exceeds configurable threshold with hysteresis support",
+			"categories": [
+				"ENVIRONMENTAL"
+			],
+			"useCases": [
+				"INDUSTRIAL_IOT",
+				"SMART_HOME"
+			],
+			"tags": [
+				"alarm",
+				"temperature",
+				"threshold"
+			],
+			"icon": "local_fire_department",
+			"color": "#DC2626",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323034629,
+			"readme": "# High Temperature Alarm\\n\\n## Overview\\nTriggers alarm when temperature exceeds configurable threshold with hysteresis support\\n\\n## Configuration\\n- **Type**: ALARM\\n- **Input Keys**: temperature, humidity\\n- **Output Key**: highTempAlarm\\n\\n## Usage\\n1. Assign the calculated field to your device profile\\n2. Configure input telemetry keys\\n3. The output key will be computed automatically",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "highTempAlarm",
+				"type": "CALCULATED_FIELD",
+				"cfType": "ALARM"
+			}
+		},
+		{
+			"id": "830c8ed0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Battery Low Alert",
+			"type": "calculated-fields",
+			"description": "Generates alert when device battery level drops below critical threshold percentage",
+			"categories": [
+				"ENERGY"
+			],
+			"useCases": [
+				"SMART_HOME",
+				"FLEET_MANAGEMENT"
+			],
+			"tags": [
+				"battery",
+				"alert",
+				"low"
+			],
+			"icon": "battery_alert",
+			"color": "#F97316",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323034714,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "batteryLowAlert",
+				"type": "CALCULATED_FIELD",
+				"cfType": "ALARM"
+			}
+		},
+		{
+			"id": "8328f070-1e19-11f1-8215-b3b187cfe311",
+			"name": "Building Total Energy",
+			"type": "calculated-fields",
+			"description": "Sums energy consumption from all floor-level meters into a single building-wide metric",
+			"categories": [
+				"ENERGY",
+				"AGGREGATION"
+			],
+			"useCases": [
+				"ENERGY_MANAGEMENT",
+				"SMART_CITY"
+			],
+			"tags": [
+				"building",
+				"energy",
+				"total"
+			],
+			"icon": "bolt",
+			"color": "#EAB308",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323034896,
+			"readme": "# Building Total Energy\\n\\n## Overview\\nSums energy consumption from all floor-level meters into a single building-wide metric\\n\\n## Configuration\\n- **Type**: ENTITY_AGGREGATION\\n- **Input Keys**: temperature, humidity\\n- **Output Key**: buildingTotalEnergy\\n\\n## Usage\\n1. Assign the calculated field to your device profile\\n2. Configure input telemetry keys\\n3. The output key will be computed automatically",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "buildingTotalEnergy",
+				"type": "CALCULATED_FIELD",
+				"cfType": "ENTITY_AGGREGATION"
+			}
+		},
+		{
+			"id": "831f5380-1e19-11f1-8215-b3b187cfe311",
+			"name": "Fleet Average Speed",
+			"type": "calculated-fields",
+			"description": "Aggregates average speed across all vehicles in a fleet asset group with outlier filtering",
+			"categories": [
+				"STATISTICAL",
+				"AGGREGATION"
+			],
+			"useCases": [
+				"FLEET_MANAGEMENT"
+			],
+			"tags": [
+				"fleet",
+				"average",
+				"speed"
+			],
+			"icon": "speed",
+			"color": "#0EA5E9",
+			"peOnly": true,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323034837,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "fleetAvgSpeed",
+				"type": "CALCULATED_FIELD",
+				"cfType": "RELATED_ENTITIES_AGGREGATION"
+			}
+		},
+		{
+			"id": "f5027270-1e19-11f1-8215-b3b187cfe311",
+			"name": "Temperature Unit Converter",
+			"type": "calculated-fields",
+			"description": "Converts temperature values between Celsius, Fahrenheit, and Kelvin units automatically",
+			"categories": [
+				"CUSTOM_FORMULA"
+			],
+			"useCases": [
+				"SMART_HOME",
+				"INDUSTRIAL_IOT"
+			],
+			"tags": [
+				"temperature",
+				"conversion"
+			],
+			"icon": "thermostat",
+			"color": "#EF4444",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323225910,
+			"readme": "# Temperature Unit Converter\n\n## Overview\nConverts temperature values between Celsius, Fahrenheit, and Kelvin units automatically\n\n## Configuration\n- **Type**: SIMPLE\n\n## Usage\n1. Assign to your device profile\n2. Configure input telemetry keys\n3. Output computed automatically",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "temperatureConverter",
+				"type": "CALCULATED_FIELD",
+				"cfType": "SIMPLE"
+			}
+		},
+		{
+			"id": "f50c3670-1e19-11f1-8215-b3b187cfe311",
+			"name": "Power Factor Calculator",
+			"type": "calculated-fields",
+			"description": "Calculates power factor from voltage, current, and active power telemetry",
+			"categories": [
+				"ENERGY"
+			],
+			"useCases": [
+				"ENERGY_MANAGEMENT",
+				"INDUSTRIAL_IOT"
+			],
+			"tags": [
+				"power",
+				"factor"
+			],
+			"icon": "calculate",
+			"color": "#F59E0B",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323225968,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "powerFactor",
+				"type": "CALCULATED_FIELD",
+				"cfType": "SIMPLE"
+			}
+		},
+		{
+			"id": "f5275f90-1e19-11f1-8215-b3b187cfe311",
+			"name": "Geofence Zone Detector",
+			"type": "calculated-fields",
+			"description": "Detects whether a device GPS position is inside or outside defined geofence polygon zones",
+			"categories": [
+				"GEOSPATIAL"
+			],
+			"useCases": [
+				"FLEET_MANAGEMENT",
+				"SMART_CITY"
+			],
+			"tags": [
+				"geofence",
+				"gps"
+			],
+			"icon": "location_on",
+			"color": "#10B981",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323226147,
+			"readme": "# Geofence Zone Detector\n\n## Overview\nDetects whether a device GPS position is inside or outside defined geofence polygon zones\n\n## Configuration\n- **Type**: GEOFENCING\n\n## Usage\n1. Assign to your device profile\n2. Configure input telemetry keys\n3. Output computed automatically",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "geofenceZone",
+				"type": "CALCULATED_FIELD",
+				"cfType": "GEOFENCING"
+			}
+		},
+		{
+			"id": "f52feb10-1e19-11f1-8215-b3b187cfe311",
+			"name": "Distance to Base Calculator",
+			"type": "calculated-fields",
+			"description": "Calculates straight-line distance from device location to configured base station coordinates",
+			"categories": [
+				"GEOSPATIAL"
+			],
+			"useCases": [
+				"FLEET_MANAGEMENT"
+			],
+			"tags": [
+				"distance",
+				"gps"
+			],
+			"icon": "straighten",
+			"color": "#06B6D4",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323226200,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "distanceToBase",
+				"type": "CALCULATED_FIELD",
+				"cfType": "GEOFENCING"
+			}
+		},
+		{
+			"id": "f5155e30-1e19-11f1-8215-b3b187cfe311",
+			"name": "Dew Point Calculator",
+			"type": "calculated-fields",
+			"description": "Computes dew point temperature from humidity and temperature using Magnus formula",
+			"categories": [
+				"ENVIRONMENTAL"
+			],
+			"useCases": [
+				"AGRICULTURE",
+				"SMART_HOME"
+			],
+			"tags": [
+				"dew-point",
+				"humidity"
+			],
+			"icon": "water_drop",
+			"color": "#3B82F6",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323226030,
+			"readme": "# Dew Point Calculator\n\n## Overview\nComputes dew point temperature from humidity and temperature using Magnus formula\n\n## Configuration\n- **Type**: SCRIPT\n\n## Usage\n1. Assign to your device profile\n2. Configure input telemetry keys\n3. Output computed automatically",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "dewPoint",
+				"type": "CALCULATED_FIELD",
+				"cfType": "SCRIPT"
+			}
+		},
+		{
+			"id": "f51e37d0-1e19-11f1-8215-b3b187cfe311",
+			"name": "OEE Efficiency Score",
+			"type": "calculated-fields",
+			"description": "Overall Equipment Effectiveness calculation combining availability, performance, and quality rates",
+			"categories": [
+				"STATISTICAL"
+			],
+			"useCases": [
+				"INDUSTRIAL_IOT"
+			],
+			"tags": [
+				"oee",
+				"efficiency"
+			],
+			"icon": "speed",
+			"color": "#8B5CF6",
+			"peOnly": true,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323226088,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "oeeScore",
+				"type": "CALCULATED_FIELD",
+				"cfType": "SCRIPT"
+			}
+		},
+		{
+			"id": "f548f150-1e19-11f1-8215-b3b187cfe311",
+			"name": "Telemetry Relay to Parent",
+			"type": "calculated-fields",
+			"description": "Propagates selected telemetry keys from child devices to parent asset with configurable mapping",
+			"categories": [
+				"AGGREGATION"
+			],
+			"useCases": [
+				"INDUSTRIAL_IOT",
+				"SMART_CITY"
+			],
+			"tags": [
+				"propagation",
+				"relay"
+			],
+			"icon": "swap_vert",
+			"color": "#6366F1",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323226364,
+			"readme": "# Telemetry Relay to Parent\n\n## Overview\nPropagates selected telemetry keys from child devices to parent asset with configurable mapping\n\n## Configuration\n- **Type**: PROPAGATION\n\n## Usage\n1. Assign to your device profile\n2. Configure input telemetry keys\n3. Output computed automatically",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "telemetryRelay",
+				"type": "CALCULATED_FIELD",
+				"cfType": "PROPAGATION"
+			}
+		},
+		{
+			"id": "f55107a0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Status Propagation Chain",
+			"type": "calculated-fields",
+			"description": "Propagates device online/offline status up through the asset hierarchy for fleet visibility",
+			"categories": [
+				"AGGREGATION"
+			],
+			"useCases": [
+				"FLEET_MANAGEMENT",
+				"INDUSTRIAL_IOT"
+			],
+			"tags": [
+				"status",
+				"propagation"
+			],
+			"icon": "swap_calls",
+			"color": "#7C3AED",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323226416,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "statusPropagation",
+				"type": "CALCULATED_FIELD",
+				"cfType": "PROPAGATION"
+			}
+		},
+		{
+			"id": "f5382870-1e19-11f1-8215-b3b187cfe311",
+			"name": "High Temperature Alarm",
+			"type": "calculated-fields",
+			"description": "Triggers alarm when temperature exceeds configurable threshold with hysteresis support",
+			"categories": [
+				"ENVIRONMENTAL"
+			],
+			"useCases": [
+				"INDUSTRIAL_IOT",
+				"SMART_HOME"
+			],
+			"tags": [
+				"alarm",
+				"temperature"
+			],
+			"icon": "local_fire_department",
+			"color": "#DC2626",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323226256,
+			"readme": "# High Temperature Alarm\n\n## Overview\nTriggers alarm when temperature exceeds configurable threshold with hysteresis support\n\n## Configuration\n- **Type**: ALARM\n\n## Usage\n1. Assign to your device profile\n2. Configure input telemetry keys\n3. Output computed automatically",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "highTempAlarm",
+				"type": "CALCULATED_FIELD",
+				"cfType": "ALARM"
+			}
+		},
+		{
+			"id": "f5403ec0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Battery Low Alert",
+			"type": "calculated-fields",
+			"description": "Generates alert when device battery level drops below critical threshold percentage",
+			"categories": [
+				"ENERGY"
+			],
+			"useCases": [
+				"SMART_HOME",
+				"FLEET_MANAGEMENT"
+			],
+			"tags": [
+				"battery",
+				"alert"
+			],
+			"icon": "battery_alert",
+			"color": "#F97316",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323226309,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "batteryLowAlert",
+				"type": "CALCULATED_FIELD",
+				"cfType": "ALARM"
+			}
+		},
+		{
+			"id": "f558f6e0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Fleet Average Speed",
+			"type": "calculated-fields",
+			"description": "Aggregates average speed across all vehicles in a fleet asset group with outlier filtering",
+			"categories": [
+				"STATISTICAL",
+				"AGGREGATION"
+			],
+			"useCases": [
+				"FLEET_MANAGEMENT"
+			],
+			"tags": [
+				"fleet",
+				"average"
+			],
+			"icon": "speed",
+			"color": "#0EA5E9",
+			"peOnly": true,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323226470,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "fleetAvgSpeed",
+				"type": "CALCULATED_FIELD",
+				"cfType": "RELATED_ENTITIES_AGGREGATION"
+			}
+		},
+		{
+			"id": "f561a970-1e19-11f1-8215-b3b187cfe311",
+			"name": "Zone Temperature Average",
+			"type": "calculated-fields",
+			"description": "Computes average temperature from all sensors in a building zone for HVAC optimization",
+			"categories": [
+				"AGGREGATION",
+				"ENVIRONMENTAL"
+			],
+			"useCases": [
+				"SMART_HOME",
+				"ENERGY_MANAGEMENT"
+			],
+			"tags": [
+				"zone",
+				"temperature",
+				"average"
+			],
+			"icon": "device_thermostat",
+			"color": "#F43F5E",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323226526,
+			"readme": "# Zone Temperature Average\n\n## Overview\nComputes average temperature from all sensors in a building zone for HVAC optimization\n\n## Configuration\n- **Type**: RELATED_ENTITIES_AGGREGATION\n\n## Usage\n1. Assign to your device profile\n2. Configure input telemetry keys\n3. Output computed automatically",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "zoneTempAvg",
+				"type": "CALCULATED_FIELD",
+				"cfType": "RELATED_ENTITIES_AGGREGATION"
+			}
+		},
+		{
+			"id": "f569bfc0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Building Total Energy",
+			"type": "calculated-fields",
+			"description": "Sums energy consumption from all floor-level meters into a single building-wide metric",
+			"categories": [
+				"ENERGY",
+				"AGGREGATION"
+			],
+			"useCases": [
+				"ENERGY_MANAGEMENT",
+				"SMART_CITY"
+			],
+			"tags": [
+				"building",
+				"energy"
+			],
+			"icon": "bolt",
+			"color": "#EAB308",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323226581,
+			"readme": "# Building Total Energy\n\n## Overview\nSums energy consumption from all floor-level meters into a single building-wide metric\n\n## Configuration\n- **Type**: ENTITY_AGGREGATION\n\n## Usage\n1. Assign to your device profile\n2. Configure input telemetry keys\n3. Output computed automatically",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "buildingTotalEnergy",
+				"type": "CALCULATED_FIELD",
+				"cfType": "ENTITY_AGGREGATION"
+			}
+		},
+		{
+			"id": "f5722430-1e19-11f1-8215-b3b187cfe311",
+			"name": "Campus Water Usage",
+			"type": "calculated-fields",
+			"description": "Aggregates water meter readings across campus buildings for total consumption reporting",
+			"categories": [
+				"AGGREGATION"
+			],
+			"useCases": [
+				"WATER_UTILITIES",
+				"SMART_CITY"
+			],
+			"tags": [
+				"water",
+				"campus"
+			],
+			"icon": "water",
+			"color": "#0891B2",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323226633,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "campusWaterUsage",
+				"type": "CALCULATED_FIELD",
+				"cfType": "ENTITY_AGGREGATION"
+			}
+		}
+	],
+	"rule-chains": [
+		{
+			"id": "f57ad6c0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Telemetry Enrichment Pipeline",
+			"type": "rule-chains",
+			"description": "Enriches incoming telemetry with device metadata, customer attributes, and computed fields before persistence",
+			"categories": [
+				"DATA_PROCESSING"
+			],
+			"useCases": [
+				"INDUSTRIAL_IOT",
+				"SMART_CITY"
+			],
+			"tags": [
+				"enrichment",
+				"telemetry"
+			],
+			"icon": "device_hub",
+			"color": "#3B82F6",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323226692,
+			"readme": "# Telemetry Enrichment Pipeline\n\n## Overview\nEnriches incoming telemetry with device metadata, customer attributes, and computed fields before persistence\n\n## Chain Type\n**CORE**\n\n## Installation\n1. Import the rule chain JSON\n2. Configure node parameters\n3. Set as root or connect to existing chain",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "Telemetry Enrichment Pipeline",
+				"type": "RULE_CHAIN",
+				"nodes": [
+					{
+						"name": "Normalize Data",
+						"type": "TRANSFORMATION"
+					},
+					{
+						"name": "Enrich Attributes",
+						"type": "ENRICHMENT"
+					},
+					{
+						"name": "Quality Check",
+						"type": "FILTER"
+					},
+					{
+						"name": "Save Telemetry",
+						"type": "UNKNOWN"
+					}
+				],
+				"nodeCount": 4,
+				"ruleChainType": "CORE"
+			}
+		},
+		{
+			"id": "f58b9fa0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Data Transformation Hub",
+			"type": "rule-chains",
+			"description": "Transforms raw telemetry into standardized format with unit conversion, deduplication, and quality scoring",
+			"categories": [
+				"DATA_PROCESSING"
+			],
+			"useCases": [
+				"INDUSTRIAL_IOT",
+				"ENERGY_MANAGEMENT"
+			],
+			"tags": [
+				"transformation",
+				"normalization"
+			],
+			"icon": "transform",
+			"color": "#8B5CF6",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323226801,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "Data Transformation Hub",
+				"type": "RULE_CHAIN",
+				"nodes": [
+					{
+						"name": "Unit Converter",
+						"type": "TRANSFORMATION"
+					},
+					{
+						"name": "Deduplication",
+						"type": "FILTER"
+					},
+					{
+						"name": "Type Router",
+						"type": "FILTER"
+					},
+					{
+						"name": "Persist Data",
+						"type": "UNKNOWN"
+					}
+				],
+				"nodeCount": 4,
+				"ruleChainType": "CORE"
+			}
+		},
+		{
+			"id": "f5836240-1e19-11f1-8215-b3b187cfe311",
+			"name": "Alarm Notification Router",
+			"type": "rule-chains",
+			"description": "Routes alarm events to appropriate notification channels based on severity level and device group",
+			"categories": [
+				"ALERTING"
+			],
+			"useCases": [
+				"INDUSTRIAL_IOT",
+				"SMART_HOME"
+			],
+			"tags": [
+				"alarm",
+				"notification"
+			],
+			"icon": "notifications_active",
+			"color": "#EF4444",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323226747,
+			"readme": "# Alarm Notification Router\n\n## Overview\nRoutes alarm events to appropriate notification channels based on severity level and device group\n\n## Chain Type\n**CORE**\n\n## Installation\n1. Import the rule chain JSON\n2. Configure node parameters\n3. Set as root or connect to existing chain",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "Alarm Notification Router",
+				"type": "RULE_CHAIN",
+				"nodes": [
+					{
+						"name": "Severity Router",
+						"type": "FILTER"
+					},
+					{
+						"name": "Email Alert",
+						"type": "UNKNOWN"
+					},
+					{
+						"name": "SMS Alert",
+						"type": "UNKNOWN"
+					},
+					{
+						"name": "Webhook Notify",
+						"type": "UNKNOWN"
+					}
+				],
+				"nodeCount": 4,
+				"ruleChainType": "CORE"
+			}
+		},
+		{
+			"id": "f5945230-1e19-11f1-8215-b3b187cfe311",
+			"name": "REST API Integration Chain",
+			"type": "rule-chains",
+			"description": "Forwards processed telemetry to external REST APIs with retry logic, rate limiting, and response handling",
+			"categories": [
+				"INTEGRATION"
+			],
+			"useCases": [
+				"INDUSTRIAL_IOT",
+				"SMART_CITY"
+			],
+			"tags": [
+				"rest",
+				"api",
+				"integration"
+			],
+			"icon": "cloud_sync",
+			"color": "#0EA5E9",
+			"peOnly": true,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323226864,
+			"readme": "# REST API Integration Chain\n\n## Overview\nForwards processed telemetry to external REST APIs with retry logic, rate limiting, and response handling\n\n## Chain Type\n**CORE**\n\n## Installation\n1. Import the rule chain JSON\n2. Configure node parameters\n3. Set as root or connect to existing chain",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "REST API Integration Chain",
+				"type": "RULE_CHAIN",
+				"nodes": [
+					{
+						"name": "Log Success",
+						"type": "ACTION"
+					},
+					{
+						"name": "Prepare Payload",
+						"type": "TRANSFORMATION"
+					},
+					{
+						"name": "Response Check",
+						"type": "FILTER"
+					},
+					{
+						"name": "API Call",
+						"type": "UNKNOWN"
+					}
+				],
+				"nodeCount": 4,
+				"ruleChainType": "CORE"
+			}
+		},
+		{
+			"id": "f5a73df0-1e19-11f1-8215-b3b187cfe311",
+			"name": "Edge Alerting Engine",
+			"type": "rule-chains",
+			"description": "Local alert processing at the edge for time-critical alarms with offline fallback and sync-on-reconnect",
+			"categories": [
+				"ALERTING"
+			],
+			"useCases": [
+				"INDUSTRIAL_IOT",
+				"SMART_HOME"
+			],
+			"tags": [
+				"edge",
+				"alert",
+				"offline"
+			],
+			"icon": "warning",
+			"color": "#F59E0B",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323226984,
+			"readme": "",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "Edge Alerting Engine",
+				"type": "RULE_CHAIN",
+				"nodes": [
+					{
+						"name": "Create Alert",
+						"type": "ACTION"
+					},
+					{
+						"name": "Local Log",
+						"type": "ACTION"
+					},
+					{
+						"name": "Sync to Cloud",
+						"type": "ACTION"
+					},
+					{
+						"name": "Alert Condition",
+						"type": "FILTER"
+					}
+				],
+				"nodeCount": 4,
+				"ruleChainType": "EDGE"
+			}
+		},
+		{
+			"id": "f59e6450-1e19-11f1-8215-b3b187cfe311",
+			"name": "Edge Data Filter",
+			"type": "rule-chains",
+			"description": "Filters and pre-processes telemetry at the edge before cloud sync to reduce bandwidth and latency",
+			"categories": [
+				"DATA_PROCESSING"
+			],
+			"useCases": [
+				"INDUSTRIAL_IOT",
+				"FLEET_MANAGEMENT"
+			],
+			"tags": [
+				"edge",
+				"filter"
+			],
+			"icon": "filter_alt",
+			"color": "#10B981",
+			"peOnly": false,
+			"creatorDisplayName": "John Doe",
+			"totalInstallCount": 0,
+			"version": "1.0.0",
+			"publishedTime": 1773323226927,
+			"readme": "# Edge Data Filter\n\n## Overview\nFilters and pre-processes telemetry at the edge before cloud sync to reduce bandwidth and latency\n\n## Chain Type\n**EDGE**\n\n## Installation\n1. Import the rule chain JSON\n2. Configure node parameters\n3. Set as root or connect to existing chain",
+			"creatorId": "5e7cc680-1e18-11f1-8215-b3b187cfe311",
+			"creatorWebsite": "thingsboard.io",
+			"dataDescriptor": {
+				"name": "Edge Data Filter",
+				"type": "RULE_CHAIN",
+				"nodes": [
+					{
+						"name": "Cloud Sync",
+						"type": "ACTION"
+					},
+					{
+						"name": "Compress Data",
+						"type": "TRANSFORMATION"
+					},
+					{
+						"name": "Threshold Filter",
+						"type": "FILTER"
+					},
+					{
+						"name": "Local Store",
+						"type": "UNKNOWN"
+					}
+				],
+				"nodeCount": 4,
+				"ruleChainType": "EDGE"
+			}
+		}
+	]
+}

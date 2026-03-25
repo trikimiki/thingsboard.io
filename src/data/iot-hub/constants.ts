@@ -1,4 +1,4 @@
-import { type TemplateType, ItemType } from './types';
+import { type TemplateType, ItemType } from './types.ts';
 
 // --- Type slug ↔ enum mapping ---
 

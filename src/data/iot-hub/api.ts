@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import type { ApiItem, ApiListResponse, IotHubItem, IotHubFullItem, TemplateType } from './types';
 import { TEMPLATE_TYPES, typeSlugToEnum, enumToTypeSlug, PAGE_SIZE } from './constants';
 import { mockItems } from './mock-data';
@@ -13,6 +15,36 @@ const cache = new Map<string, Promise<IotHubFullItem[]>>();
 
 function useMock(): boolean {
 	return import.meta.env.IOT_HUB_MOCK === 'true';
+}
+
+function useLiveApi(): boolean {
+	return import.meta.env.IOT_HUB_FETCH === 'true';
+}
+
+// --- Load from pre-fetched JSON (default mode) ---
+
+const JSON_PATH = resolve(process.cwd(), 'src/data/iot-hub/iot-hub-data.json');
+
+let jsonData: Record<string, IotHubFullItem[]> | null = null;
+
+function loadJsonData(): Record<string, IotHubFullItem[]> {
+	if (!jsonData) {
+		try {
+			const raw = readFileSync(JSON_PATH, 'utf-8');
+			jsonData = JSON.parse(raw) as Record<string, IotHubFullItem[]>;
+		} catch {
+			throw new Error(
+				'IoT Hub data file not found: src/data/iot-hub/iot-hub-data.json\n' +
+					'Run "pnpm iot-hub:fetch" to generate it, or set IOT_HUB_FETCH=true to fetch from API.',
+			);
+		}
+	}
+	return jsonData;
+}
+
+function loadFromJson(type: TemplateType): IotHubFullItem[] {
+	const data = loadJsonData();
+	return (data[type] as IotHubFullItem[]) ?? [];
 }
 
 // --- Transform API response to internal types ---
@@ -64,15 +96,19 @@ export async function fetchAll(type: TemplateType): Promise<IotHubFullItem[]> {
 		return cache.get(key)!;
 	}
 
-	const promise = (async () => {
-		const apiType = typeSlugToEnum[type];
-		const res = await fetch(
-			`${API_BASE}/api/versions/published?pageSize=${MAX_SIZE}&page=0&sortProperty=totalInstallCount&sortOrder=DESC&type=${apiType}`,
-		);
-		if (!res.ok) throw new Error(`IoT Hub API error: ${res.status} for type ${apiType}`);
-		const json: ApiListResponse = await res.json();
-		return (json.data ?? []).map(transformItem);
-	})();
+	// Default: read from pre-fetched JSON; IOT_HUB_FETCH=true: live API
+	const promise = useLiveApi()
+		? (async () => {
+				const apiType = typeSlugToEnum[type];
+				const res = await fetch(
+					`${API_BASE}/api/versions/published?pageSize=${MAX_SIZE}&page=0&sortProperty=totalInstallCount&sortOrder=DESC&type=${apiType}`,
+				);
+				if (!res.ok)
+					throw new Error(`IoT Hub API error: ${res.status} for type ${apiType}`);
+				const json: ApiListResponse = await res.json();
+				return (json.data ?? []).map(transformItem);
+			})()
+		: Promise.resolve(loadFromJson(type));
 
 	cache.set(key, promise);
 	return promise;
@@ -82,6 +118,18 @@ export async function fetchAll(type: TemplateType): Promise<IotHubFullItem[]> {
 
 export async function fetchReadme(itemId: string): Promise<string> {
 	if (useMock()) return '';
+
+	// When using cached JSON, readmes are already embedded in items
+	if (!useLiveApi()) {
+		const data = loadJsonData();
+		for (const type of TEMPLATE_TYPES) {
+			const items = (data[type] as IotHubFullItem[]) ?? [];
+			const found = items.find((item) => item.id === itemId);
+			if (found) return found.readme ?? '';
+		}
+		return '';
+	}
+
 	try {
 		const res = await fetch(`${API_BASE}/api/versions/${itemId}/readme`);
 		if (!res.ok) return '';
