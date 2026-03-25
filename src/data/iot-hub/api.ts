@@ -3,6 +3,8 @@ import { TEMPLATE_TYPES, typeSlugToEnum, enumToTypeSlug, PAGE_SIZE } from './con
 import { mockItems } from './mock-data';
 import { ItemType } from './types';
 
+export const HYBRID_MODE = false;
+
 const MAX_SIZE = 2000;
 const DEFAULT_API_BASE = 'http://10.7.2.165:8090';
 const API_BASE = import.meta.env.API_BASE_URL || DEFAULT_API_BASE;
