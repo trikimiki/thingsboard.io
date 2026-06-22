@@ -3,16 +3,16 @@ import ImageGallery from '~/components/ImageGallery.astro';
 import { Aside } from '@astrojs/starlight/components';
 
 This article describes the most common deployment architectures supported by ThingsBoard.
-All deployment scenarios contain certain pros and cons.
-Choosing the right architecture for your deployment depends on the infrastructure cost, performance and high-availability requirements.
+Every deployment scenario has its own pros and cons.
+Choosing the right architecture for your deployment depends on your cost, performance, and high-availability requirements.
 
-The three reference architectures below run on AWS and range from approximately $129/month for a single standalone server to approximately $1,100/month for a multi-AZ high-availability cluster. Each section includes the full infrastructure cost breakdown.
+Described below are 3 reference architectures, ranging from a single standalone server to a multi-AZ high-availability cluster. Each section lists the minimum compute resources it requires.
 
-## Key infrastructure characteristics
+## Planning the deployment - key decisions before you start
 
-Setting up ThingsBoard depends on several factors, including your business needs, compliance rules, and expected growth. The sections below lay out the technical details to make your architecture decision easier.
+Setting up ThingsBoard depends on several factors, including your business needs, compliance rules, and expected growth. This section lays out the technical details to make your architecture decision easier.
 
-### Deployment options overview
+### Your deployment options: overview
 
 Your choice of deployment affects how easily you can install, manage, and grow your system.
 
@@ -22,70 +22,59 @@ Your choice of deployment affects how easily you can install, manage, and grow y
 | **Single-Node Cluster**<br />[(Scenario B)](#scenario-b-single-node-cluster) | Expected growth in devices and users, starting small | Good balance of startup cost and future scalability |
 | **High Availability Microservices**<br />[(Scenario C)](#scenario-c-high-availability) | Strict uptime and fault-tolerance requirements | Stays available even if one Availability Zone fails |
 
-The table below compares their resilience, scaling model, and entry cost.
+This table compares their resilience, scaling model, and minimum compute requirements.
 
-<Aside type="caution" title="Important notice">
-All pricing below is approximate and provided as an example, based only on core infrastructure components costs (computing, storage, load-balancing). A production-grade environment typically requires additional operational services, such as backup tools, monitoring and secrets management. All of these will further increase the total cost. Please consult your cloud provider to get accurate pricing per your use case.
+| Scenario | Typical Availability<br />(uptime&nbsp;target) | Scaling | Minimum Requirements<br />(vCPU&nbsp;/&nbsp;GB) |
+|----------|-------------------|---------|----------------------|
+| [**Scenario&nbsp;A**](#scenario-a-monolith) | Best&#8209;effort<br />(single&nbsp;instance,&nbsp;no&nbsp;auto&#8209;failover) | Vertical<br />(add&nbsp;CPU/RAM) | 1&nbsp;server&nbsp;(4/16) |
+| [**Scenario&nbsp;B**](#scenario-b-single-node-cluster) | ~99.9%<br />(single&#8209;AZ,&nbsp;self&#8209;healing) | Horizontal<br />(Kubernetes) | 1&nbsp;app&nbsp;node&nbsp;(4/16)<br />1&nbsp;SQL&nbsp;node&nbsp;(4/4) |
+| [**Scenario&nbsp;C**](#scenario-c-high-availability) | ~99.95%<br />(multi&#8209;AZ,&nbsp;automatic&nbsp;failover) | Horizontal<br />(Kubernetes) | 3&nbsp;app&nbsp;nodes&nbsp;(4/16)<br />2&nbsp;SQL&nbsp;nodes&nbsp;(4/4) |
+
+<Aside type="note">
+Uptime targets are availability levels each architecture can reach when operated with sound practices (monitoring, timely recovery, tested failover). Actual uptime depends on your operations.<br />For an SLA-backed, fully managed deployment, see [Private Cloud](/pricing/?product=thingsboard-private-cloud).
 </Aside>
 
-| Scenario | High Availability | Scaling | Starting cost |
-|----------|-------------------|---------|---------------|
-| [**Scenario&nbsp;A**](#scenario-a-monolith) | Best-effort<br />(single instance, no auto-failover) | Vertical<br />(add CPU/RAM) | from&nbsp;~$129/month |
-| [**Scenario&nbsp;B**](#scenario-b-single-node-cluster) | Limited<br />(single-AZ, self-healing) | Horizontal<br />(Kubernetes) | from&nbsp;~$282/month |
-| [**Scenario&nbsp;C**](#scenario-c-high-availability) | Full<br />(multi-AZ, automatic failover) | Horizontal<br />(Kubernetes) | from&nbsp;~$630/month |
+### Database topology: SQL-only vs Hybrid
 
-**Scaling**:
+It is important to plan both the amount of data you expect to store (persisted telemetry) and the amount you expect to query (dashboard widgets, API responses). Your database choice strongly influences how much data you can read and write at sustainable performance.
 
-* Standalone deployment scales vertically (adding more CPU/RAM to a single machine).
-
-* Microservice deployment (MSA) scales horizontally (adding more servers).
-
-### Database topology approach
-
-It is important to plan both amount of data you expect to store (persisted telemetry) and amount of data that will be queried (dashboard widgets, API responses). The volume of data your system can write and read with sustainable performance is significantly influenced by your database choice.
-
-ThingsBoard supports two primary database topologies: SQL-only and Hybrid.
+ThingsBoard supports 2 primary database topologies: SQL-only and Hybrid.
 
 1. **SQL-only topology** uses PostgreSQL exclusively for storing all ThingsBoard data, including entities and telemetry.
   This approach simplifies architecture and maintenance, and is best suited for environments with predictable data volume.
-2. **Hybrid topology** uses Cassandra database for historical time-series (telemetry) data, while PostgreSQL handles entity and latest telemetry data. Deploying a dedicated NoSQL database enables exclusive features, such as per-item telemetry retention, and provides more predictable storage management, but comes with increased architectural complexity and maintenance overhead.
-  This approach is best for environments with continuous telemetry and data volume growth, requiring optimized storage for historical time-series.
+2. **Hybrid topology** uses a Cassandra database for historical time-series (telemetry) data, while PostgreSQL handles entity and latest telemetry data. Deploying a dedicated NoSQL database enables exclusive features, such as per-item telemetry retention, and provides more predictable storage management.
+  This approach is best for environments with continuously growing telemetry and data volume, requiring optimized storage for historical time-series.
 
-#### Choosing the right approach
+#### Picking a topology
 
-There is no universal hard limit on the number of reads or writes a PostgreSQL-only topology can handle, nor is there a specific threshold where a Hybrid approach becomes mandatory. Performance relies heavily on use-case specifics, such as the number of devices, telemetry sending interval and volume, dashboard complexity, and the way telemetry is processed and stored.
+There is no universal hard limit on the number of reads or writes a PostgreSQL-only topology can handle, nor is there a specific threshold where a Hybrid approach becomes mandatory. Performance relies heavily on use-case specifics, such as the number of devices, how often and how much telemetry they send, dashboard complexity, and how that data is processed and stored.
 
 However, consider the Hybrid topology if any of the following characteristics match your ThingsBoard environment:
 
 - **Long retention periods (1 year or more) are required, and older data is frequently queried** (dashboards or API calls).
   Cassandra offers more predictable and efficient long-term storage, especially when the total dataset grows into hundreds of gigabytes.
-- **Dashboards display complex widgets with multiple time-series on a single page**. That is especially relevant for dashboards with time windows spanning weeks, or using aggregations with large amount of data points and short grouping intervals.
-  ThingsBoard’s telemetry storage model is significantly more optimized for Cassandra when reading older or wide-range timestamp data.
+- **Dashboards display complex widgets with multiple time-series on a single page**. That is especially relevant for dashboards spanning weeks-long time windows, or using aggregations with a large number of data points and short grouping intervals.
+  ThingsBoard’s telemetry storage model is significantly more optimized for Cassandra when reading old data across wide time ranges.
 - **Different telemetry types require different retention periods.**
   PostgreSQL supports only global TTL; Cassandra allows per-key or per-row TTL, enabling flexible retention strategies.
 
-Additionally, before opting for a Hybrid topology, keep in mind the architectural implications introduced by Cassandra:
+<Aside type="note">
+Choosing the right database topology up front gives the best performance and lowest overhead - but if needed, you can always <a href="https://github.com/thingsboard/database-migrator" target="_blank" rel="noopener noreferrer">migrate from PostgreSQL-only topology to a hybrid one</a>.
+</Aside>
 
-- **Your engineering team must be prepared to operate two distinct databases simultaneously**, and possess (or develop) expertise in Cassandra’s architecture and operational model.
-  Cassandra is a distributed database requiring specialized maintenance routines, which differ substantially from SQL systems. Its operational management requires unique processes and dedicated tools.
-- **Expect increased architectural complexity and higher infrastructure costs.**
-  While offering better efficiency for telemetry, Cassandra requires additional server resources and careful cluster management compared to a PostgreSQL-only deployment.
+### Workload-based sizing: general guidelines
 
-While it is crucial to set up a suitable database architecture during initial deployment to ensure the best performance with minimal infrastructure and maintenance costs - note that it is possible to <a href="https://github.com/thingsboard/database-migrator" target="_blank" rel="noopener noreferrer">migrate from PostgreSQL-only topology to a hybrid one</a> in case required.
+Capacity depends on many factors: payload shape, rule-chain processing, query patterns, and how evenly traffic arrives - and each of those may affect the limits of specific application components. That is why the scenario descriptions avoid fixed device or throughput ceilings.
 
-### Estimating capacity from device workload
-
-Capacity depends on many factors: payload shape, rule-chain processing, query patterns, and how evenly traffic arrives - all these shift where each component reaches its limit. That is why the scenario descriptions avoid fixed device or throughput ceilings.
-
-If you need additional considerations to determine which scenario works best - you can estimate a recommended starting point for your device workload.
+If you're unsure which scenario fits, you can estimate a recommended starting point from your device workload.
 
 <Aside type="note">
-Figures below are deliberately approximate, not hard limits the platform enforces. This section is biased toward a comfortable setup with headroom for real-world factors.<br />Refine the recommendation based on your other needs, such as availability, data retention, budget, etc.
+Figures below are deliberately approximate, not hard limits the platform enforces - they lean toward a safe starting point with headroom for real-world factors.<br />Refine the recommendation based on your other needs, such as availability, data retention, budget, etc.
 </Aside>
 
 #### Data points per second metric
 
-The main metric used throughout this section is data points per second (dp/s) — the number of telemetry values written per second, calculated as follows:
+The main metric used throughout this section is data points per second (dp/s) - the number of telemetry values written per second, calculated as follows:
 
 ```text
 dp/s = devices × messages/min × data points/message ÷ 60
@@ -98,7 +87,7 @@ For example, 2,000 devices sending 2 messages per minute with 8 data points each
 32,000 ÷ 60 ≈ 533 dp/s
 ```
 
-#### Workload-based starting point table
+#### Recommended starting points
 
 <Aside type="caution">
 Always **validate sizing on representative hardware with your own data** before finalizing a production architecture.
@@ -106,37 +95,37 @@ Always **validate sizing on representative hardware with your own data** before 
 
 | Signal | Starting point | Reasoning |
 |--------|----------------|-----------|
-| &lt;&nbsp;2,500&nbsp;dp/s | [Scenario&nbsp;A](#scenario-a-monolith) | Comfortably within a single instance's write and processing capacity. |
-| 2,500&#8209;5,000&nbsp;dp/s | [Scenario&nbsp;A&nbsp;+&nbsp;addons](#optional-kafka)<br />[Scenario&nbsp;B&#8209;1](#setup-1-general-purpose-scalable-deployment) | SQL-only write capacity comfortably covers this range, with Kafka absorbing bursts for steadier processing. |
-| 5,000&#8209;10,000&nbsp;dp/s | [Scenario&nbsp;B&#8209;2](#setup-2-high-capability-scalable-deployment) | A Hybrid (Cassandra) database handles sustained, high-volume telemetry with more headroom and predictable storage growth. |
-| &gt;&nbsp;10,000&nbsp;dp/s | [Scenario&nbsp;C&#8209;2](#setup-2-high-capability-msa-cluster) | Multiple transport and tb-node replicas spread sustained high ingest across nodes. |
+| &lt;&nbsp;~2,500&nbsp;dp/s | [Scenario&nbsp;A](#scenario-a-monolith) | Comfortably within a single instance's write and processing capacity. |
+| ~2,500&#8209;5,000&nbsp;dp/s | [Scenario&nbsp;A&nbsp;+&nbsp;addons](#optional-kafka)<br />[Scenario&nbsp;B&#8209;1](#setup-1-general-purpose-scalable-deployment) | SQL-only write capacity comfortably covers this range, with Kafka absorbing bursts for steadier processing. |
+| ~5,000&#8209;10,000&nbsp;dp/s | [Scenario&nbsp;B&#8209;2](#setup-2-high-capability-scalable-deployment) | A Hybrid (Cassandra) database handles sustained, high-volume telemetry with more headroom and predictable storage growth. |
+| &gt;&nbsp;~10,000&nbsp;dp/s | [Scenario&nbsp;C&#8209;2](#setup-2-high-capability-msa-cluster) | Scales out transport and TB-node replicas to handle sustained high throughput. |
 
-#### Additional considerations
+#### Factors beyond throughput
 
-Note a few different sizing factors that matter as much as raw dp/s:
-- **Account for device count on its own.** <DocLink product={props.product} path="user-guide/connectivity-status">Device State service</DocLink> is generally able to handle the order of 100,000 devices per <DocLink product={props.product} path="reference/architecture/microservices/#thingsboard-node">TB-core/TB-node</DocLink>, so very large fleets lean toward a multi-node setup regardless of dp/s.
-- **Size for the peak, not the average.** Ensure your platform is properly sized for transport usage spikes. Specifically, when devices report on a synchronized schedule or loosely cluster their sends, reconnect/disconnect storms create spikes far above the average dp/s.
-- **Count connections, not just throughput.** A single transport handles roughly 50,000 concurrent direct device connections; beyond that, add more transport replicas, or consider <a href="/docs/mqtt-broker/">a dedicated MQTT broker</a> or <a href="/docs/iot-gateway/">Gateway</a> in front.
+Note a few other sizing factors that matter as much as raw dp/s:
+- **Device count matters on its own.** The <DocLink product={props.product} path="user-guide/connectivity-status">Device State service</DocLink> can handle around 100,000 devices per <DocLink product={props.product} path="reference/architecture/microservices/#thingsboard-node">TB-core/TB-node</DocLink>, so very large fleets lean toward a multi-node setup regardless of dp/s.
+- **Count connections, not just throughput.** A single transport handles roughly 50,000 concurrent direct device connections; beyond that, add more transport replicas, or route devices through <a href="/docs/mqtt-broker/">a dedicated MQTT broker</a> or <a href="/docs/iot-gateway/">Gateway</a> instead of connecting them directly to the transport layer.
+- **Size for sustained load, not every spike.** Traffic rarely arrives evenly, so specific patterns (for example, devices that report on a synchronized schedule) can briefly push dp/s above average. Kafka absorbs these short bursts between transport and the rule engine. You still need to size for the considerations above, as these are exceptions where queue buffering does not apply.
 
 ## Deployment scenarios
 
 ### Scenario A (Monolith)
 
-This deployment scenario is designed for straightforward, cost-efficient deployments supporting applications with low to moderate workloads and limited horizontal scaling needs. It adopts a monolithic server approach, consolidating core services onto a single compute instance to reduce infrastructure complexity and operational effort.
+This deployment scenario is designed for straightforward, cost-efficient deployments supporting applications with low to moderate workloads and a limited need to scale horizontally. It adopts a monolithic server approach, consolidating core services onto a single compute instance to reduce infrastructure complexity and operational effort.
 
-The deployment pattern includes a base setup plus optional addons, each tailored to different database management preferences.
+The deployment pattern includes a base setup plus optional addons.
 
 #### Setup: Simple standalone server
 
 For the simplest, most cost-efficient setup, all components, including the database and proxy, are hosted on a single server. This configuration is ideal for prototyping, development environments, or small-scale production workloads where ease of management and cost are the primary concerns.
 
-<ImageGallery images={[{ src: '/src/assets/schemas/scenario-a-basic.svg', alt: 'Scenario A, Setup: simple standalone ThingsBoard server with PostgreSQL and reverse proxy on a single AWS EC2 instance' }]} />
+<ImageGallery images={[{ src: '/src/assets/schemas/scenario-a-basic.svg', alt: 'Scenario A, Setup: simple standalone ThingsBoard server with PostgreSQL and reverse proxy on a single server' }]} />
 
 You can further improve this architecture by applying optional addons, described below.
 
 **Compute Resources:**
 
-- AWS EC2 Instance: `m7g.xlarge` (4 vCPUs, 16 GiB memory, ARM64 architecture)
+- Application server: 4 vCPU, 16 GB RAM
 
 **Application Components:**
 
@@ -157,62 +146,70 @@ The following services run directly on the host:
 **Cons:**
 
 - No horizontal scaling
-- Single point of failure on the EC2 instance
+- Single point of failure (entire deployment runs on one server)
 - Local PostgreSQL requires manual maintenance and backups
 - Not suitable for high-availability or high-throughput scenarios
 
-**Infrastructure costs:**
+**Minimum requirements:**
 
-| Component | Quantity | Monthly cost |
-|-----------|----------|-------------|
-| EC2 (m7g.xlarge) | 1 | $119.14 |
-| Elastic IP | 1 | $3.60 |
-| Storage (50 GB system volume) | 1 | $5 |
-| **Estimated total** | | **~$129/month** |
+| Component | Count | Specification |
+|-----------|-------|---------------|
+| Application server | 1 | 4 vCPU, 16 GB RAM |
+| System volume | 1 | 50 GB |
+| Static public IP | 1 | — |
+
+*Recommended CPU architecture: x86-64.*
+
+<Aside type="note">
+x86-64 is recommended because this single server also runs the time-series database, which carries the heaviest read and write load.
+</Aside>
 
 ##### (Optional) Kafka
 
-Default Scenario A configuration does not include Kafka. However, Kafka can be added as a supplemental component to handle bursts of telemetry data without overloading the main application, ensuring more reliable message handling.
+The default Scenario A configuration does not include Kafka. However, Kafka can be added as a supplemental component to handle bursts of telemetry data without overloading the main application, ensuring more reliable message handling.
 
-##### (Optional) AWS RDS as external DB
+##### (Optional) External Postgres instance
 
-This configuration separates the application stack from the data storage, leveraging AWS RDS service for database management. This offers improved resilience, automated backups, and patching for the database layer, while keeping the application deployment simple.
+This configuration separates the application stack from the data storage by moving the database onto an external Postgres instance. This isolates database load from the application and lets you scale and back up storage independently, while keeping the application deployment simple.
 
-<ImageGallery images={[{ src: '/src/assets/schemas/scenario-a-optional.svg', alt: 'Scenario A optional addon: ThingsBoard standalone server with entity and telemetry data offloaded to an AWS-managed RDS instance' }]} />
+<ImageGallery images={[{ src: '/src/assets/schemas/scenario-a-optional.svg', alt: 'Scenario A optional addon: ThingsBoard standalone server with entity and telemetry data offloaded to an external Postgres instance' }]} />
 
 **Architectural Modifications:**
 
-- Entity and telemetry data: migrate from self-managed PostgreSQL to AWS-managed RDS instance.
+- Entity and telemetry data: migrate from the local PostgreSQL to an external Postgres instance (Postgres node).
 
 **Additional Compute Resources:**
 
-- Instance type: `db.t4g.medium` (2 vCPUs, 4 GiB memory, ARM64 architecture)
-  - since ThingsBoard does not cause consistently high CPU utilization on the SQL database, low-cost burstable instances are suited.
+- Postgres node: 4 vCPU, 4 GB RAM
+
+<Aside type="note">
+For an external database, a managed PostgreSQL service is recommended where your provider offers one, as it offloads backups, patching, and failover.
+</Aside>
 
 #### Summary
 
-Scenario A provides the simplest and most cost-efficient deployment path but is best suited for environments with predictable, moderate workloads. While the monolithic design reduces operational overhead, it also introduces clear limitations in scalability and fault tolerance. The RDS addon improves database reliability while keeping the single-node application simple.
+Scenario A provides the simplest and most cost-efficient deployment path but is best suited for environments with predictable, moderate workloads. While the monolithic design reduces operational overhead, it also introduces clear limitations in scalability and fault tolerance. The external Postgres addon improves database reliability while keeping the single-node application simple.
 
 This scenario is ideal for early-stage deployments but may require vertical scaling as system demands increase.
 
 ### Scenario B (Single-Node Cluster)
 
-This reference targets horizontally scalable deployment. While ThingsBoard within this environment still runs as a single instance (monolith), the overall architecture is fundamentally different from [Scenario A](#scenario-a-monolith). By deploying into a Kubernetes cluster (EKS), this setup achieves true horizontal scalability and self-healing capabilities.
+This reference targets a horizontally scalable deployment. While ThingsBoard still runs as a single instance (monolith), the overall architecture is fundamentally different from [Scenario A](#scenario-a-monolith). By deploying into a Kubernetes cluster, this setup achieves self-healing and the ability to scale out horizontally when needed.
 
-It is ideal for production environments anticipating future growth beyond initial operational loads. The architecture utilizes managed AWS services (including Amazon EKS, ELB, and RDS) to minimize operational overhead such as instance provisioning, patch management, and backup orchestration.
+It is ideal for production environments anticipating future growth beyond initial operational loads. Kubernetes manages container placement and rolling upgrades, keeping day-to-day operations and version updates low-effort.
 
-The deployment pattern includes two configuration options, each optimized for varying data ingestion throughput requirements.
+The deployment pattern includes 2 configuration options, each optimized for a different level of data ingestion.
 
 #### Setup 1: General-Purpose Scalable Deployment
 
-For workloads with moderate data ingestion rates, this setup utilizes Amazon RDS as entity and telemetry data storage. Public access to the ThingsBoard application inside the cluster provided by ELB.
+For workloads with moderate data ingestion rates, this setup uses a Postgres instance to store both entity and telemetry data. Public access to the ThingsBoard application inside the cluster is provided by a load balancer.
 
-<ImageGallery images={[{ src: '/src/assets/schemas/scenario-b-sql.svg', alt: 'Scenario B, Setup 1: single-node EKS cluster running ThingsBoard with AWS RDS for entity and telemetry data, exposed via ELB' }]} />
+<ImageGallery images={[{ src: '/src/assets/schemas/scenario-b-sql.svg', alt: 'Scenario B, Setup 1: single-node Kubernetes cluster running ThingsBoard with a Postgres instance for entity and telemetry data, exposed via a load balancer' }]} />
 
 **Compute Resources:**
 
-- EKS cluster provisioned with a single worker node
-- Instance type: `m7g.xlarge` (4 vCPUs, 16 GiB memory, ARM64 architecture)
+- Kubernetes cluster provisioned with a single worker node
+- Node: 4 vCPU, 16 GB RAM
 
 **Application Components:**
 
@@ -224,61 +221,66 @@ The following containerized services are deployed to the compute node:
 | tb&#8209;js&#8209;executor | 3 | Distributed JavaScript execution runtime |
 | tb&#8209;web&#8209;ui | 1 | Static asset delivery service |
 | Kafka | 1 | Message broker and event streaming platform |
-| AWS RDS | 1 | AWS-managed relational database for all entity and time-series data |
+| Postgres node | 1 | Relational database for all entity and time-series data |
 
 **Database Specifications:**
 
-- Instance type: `db.t4g.medium` (2 vCPUs, 4 GiB memory, ARM64 architecture)
-  - since ThingsBoard does not cause consistently high CPU utilization on the SQL database, low-cost burstable instances are suited.
+- Postgres node: 4 vCPU, 4 GB RAM
 
 **Pros:**
 
-- Easy to backup and maintain PostgreSQL database
+- Easy to back up and maintain PostgreSQL database
 - Production-ready deployment
 - Ready to scale horizontally
 - Self-healing cluster
 
 **Cons:**
 
-- Additional costs for managed Kubernetes and Database services
-- Single point of failure (single availability zone)
+- Additional costs for managed Kubernetes and database services
+- Single point of failure (single Availability Zone)
 
-**Infrastructure costs:**
+**Minimum requirements:**
 
-| Component | Quantity | Monthly cost |
-|-----------|----------|-------------|
-| EC2 (m7g.xlarge) | 1 | $119.14 |
-| Elastic IP | 1 | $3.60 |
-| RDS (db.t4g.medium) | 1 | $54 |
-| System node volume (20 GB) | 1 | $2 |
-| RDS storage (50 GB) | 1 | $6 |
-| EKS Control Plane | 1 | $75 |
-| ELB | 1 | $22 |
-| **Estimated total** | | **~$282/month** |
+| Component | Count | Specification |
+|-----------|-------|---------------|
+| Application node | 1 | 4 vCPU, 16 GB RAM |
+| Postgres node | 1 | 4 vCPU, 4 GB RAM |
+| System volume | 1 | 20 GB |
+| Postgres storage | 1 | 50 GB |
+| Kubernetes control plane | 1 | managed |
+| Load balancer | 1 | — |
+| Static public IP | 1 | — |
+
+*Recommended CPU architecture: ARM64 for application nodes; x86-64 for the Postgres node.*
+
+<Aside type="note">
+ARM64 is preferred for application nodes for its power and cost efficiency.<br />
+x86-64 is preferred for the time-series database nodes, which carry the heaviest read and write load.<br />
+A managed PostgreSQL service is recommended when your provider offers one, as it offloads backups, patching, and failover.
+</Aside>
 
 #### Setup 2: High-Capability Scalable Deployment
 
-With increased telemetry write/read request rates, the architecture may be transitioned to a **hybrid database topology**. This approach separates entity data (PostgreSQL) from time-series data (Cassandra), enabling independent scaling of read- and write-heavy workloads.
+At higher telemetry throughput, the architecture may be transitioned to a **hybrid database topology**. Switching telemetry writes to Cassandra enables far greater scalability, especially valuable for read-heavy and write-heavy workloads.
 
-<ImageGallery images={[{ src: '/src/assets/schemas/scenario-b-hybrid.svg', alt: 'Scenario B, Setup 2: single-node EKS cluster with hybrid database topology — AWS RDS for entity data and a self-hosted Cassandra cluster for telemetry' }]} />
+<ImageGallery images={[{ src: '/src/assets/schemas/scenario-b-hybrid.svg', alt: 'Scenario B, Setup 2: single-node Kubernetes cluster with hybrid database topology - a Postgres instance for entity data and a self-hosted Cassandra cluster for telemetry' }]} />
 
 **Architectural Modifications:**
 
-- Entity data: AWS RDS - unchanged from Setup 1
-- Telemetry data: migrate from AWS RDS to self-hosted Apache Cassandra cluster
+- Entity data: stays on the Postgres node (can now be downsized to a burstable instance if available)
+- Telemetry data: migrate from the Postgres node to a self-hosted Apache Cassandra cluster
 
 **Additional Compute Resources:**
 
-Three additional EKS worker nodes are provisioned to host the distributed Cassandra cluster:
+Three additional worker nodes are provisioned to host the distributed Cassandra cluster:
 
-- Instance type: `m7g.large` (2 vCPUs, 8 GiB memory, ARM64 architecture)
-  - for maximum performance on read-intensive loads, it is recommended to use Intel- or AMD-based instance types (`m7i` or `m7a`)
+- Cassandra node: 2 vCPU, 8 GB RAM
 - Node count: 3
 - Deployment pattern: 1 Cassandra instance per node (ensuring fault tolerance and data replication)
 
 **Pros:**
 
-- Easy to backup and maintain PostgreSQL database
+- Easy to back up and maintain PostgreSQL database
 - Cassandra provides enhanced read/write performance for telemetry data
 - Production-ready deployment
 - Ready to scale horizontally
@@ -286,24 +288,32 @@ Three additional EKS worker nodes are provisioned to host the distributed Cassan
 
 **Cons:**
 
-- Additional costs for managed Kubernetes and Database services
-- Single point of failure (single availability zone)
-- Self-hosted Cassandra database needs to be maintained and backed up
+- Additional costs for managed Kubernetes and database services
+- Single point of failure (single Availability Zone)
+- Self-hosted Cassandra adds a layer of backup and maintenance work
 
-**Infrastructure costs:**
+**Minimum requirements:**
 
-| Component | Quantity | Monthly cost |
-|-----------|----------|-------------|
-| EC2 (m7g.xlarge, ThingsBoard) | 1 | $119.14 |
-| EC2 (m7g.large, Cassandra) | 3 | $178.70 |
-| Elastic IP | 1 | $3.60 |
-| RDS (db.t4g.medium) | 1 | $54 |
-| System node volumes (20 GB) | 4 | $8 |
-| RDS storage (50 GB) | 1 | $6 |
-| Cassandra storage volumes (50 GB) | 3 | $12 |
-| EKS Control Plane | 1 | $75 |
-| ELB | 1 | $22 |
-| **Estimated total** | | **~$479/month** |
+| Component | Count | Specification |
+|-----------|-------|---------------|
+| Application node | 1 | 4 vCPU, 16 GB RAM |
+| Cassandra node | 3 | 2 vCPU, 8 GB RAM |
+| Postgres node | 1 | 2 vCPU, 4 GB RAM |
+| System volume | 4 | 20 GB |
+| Postgres storage | 1 | 50 GB |
+| Cassandra storage | 3 | 50 GB |
+| Kubernetes control plane | 1 | managed |
+| Load balancer | 1 | — |
+| Static public IP | 1 | — |
+
+*Recommended CPU architecture: ARM64 for application nodes; ARM64 for the Postgres node (burstable); x86-64 for Cassandra nodes.*
+
+<Aside type="note">
+ARM64 is preferred for application nodes for its power and cost efficiency.<br />
+x86-64 is preferred for the time-series database nodes, which carry the heaviest read and write load.<br />
+Postgres now holds only entity data and can use a burstable instance (a lower-cost type that runs at a low baseline CPU and briefly bursts higher during short spikes) if available.<br />
+A managed PostgreSQL service is recommended when your provider offers one, as it offloads backups, patching, and failover.
+</Aside>
 
 #### Summary
 
@@ -315,25 +325,25 @@ This scenario is ideal for organizations anticipating future growth and requirin
 
 ### Scenario C (High Availability)
 
-This deployment option is designed for production instances requiring high availability and fault tolerance. Additionally, as a result of scaled amount of ThingsBoard and third-party services, it can handle higher operational loads and data ingestion rates with increased server capacity.
+This deployment option is designed for production instances requiring high availability and fault tolerance. Additionally, it runs more replicas of both ThingsBoard and third-party services, so it can handle more load and higher ingestion.
 
-This scenario is a direct upgrade to [Scenario B](#scenario-b-single-node-cluster), featuring multiple replicas spanned across different Availability Zones in horizontal scaling manner. Like its preceding scenario, the architecture leverages AWS managed services that provide similar perks of minimized operational overhead of infrastructure provisioning, patch management, and backup orchestration. Similarly to [Scenario B](#scenario-b-single-node-cluster), there are two distinct configurations optimized for varying data ingestion requirements.
+This scenario is a direct upgrade to [Scenario B](#scenario-b-single-node-cluster), featuring multiple replicas spread across different Availability Zones. Like its preceding scenario, it runs on Kubernetes, keeping container placement, restarts, and rolling upgrades automated and low-effort. There are 2 distinct configurations optimized for different ingestion rates.
 
 #### Setup 1: General-Purpose MSA Cluster
 
-For workloads with moderate data ingestion rates, this setup utilizes Amazon RDS as entity and telemetry data storage. Public access to the ThingsBoard application inside the cluster provided by ELB.
+For workloads with moderate data ingestion rates, this setup uses a Postgres instance to store both entity and telemetry data. Public access to the ThingsBoard application inside the cluster is provided by a load balancer.
 
-<ImageGallery images={[{ src: '/src/assets/schemas/scenario-c-sql.svg', alt: 'Scenario C, Setup 1: high-availability ThingsBoard microservices cluster spanning three Availability Zones with AWS RDS and ELB' }]} />
+<ImageGallery images={[{ src: '/src/assets/schemas/scenario-c-sql.svg', alt: 'Scenario C, Setup 1: high-availability ThingsBoard microservices cluster spanning three Availability Zones with a Postgres instance and a load balancer' }]} />
 
 **Compute Resources:**
 
-- EKS cluster provisioned within 3 Availability Zones
-  - each of 3 worker nodes are deployed within corresponding Availability Zone
-- Instance type: `m7g.xlarge` (4 vCPUs, 16 GiB memory, ARM64 architecture)
+- Kubernetes cluster provisioned within 3 Availability Zones
+  - each of the 3 worker nodes is deployed in its own Availability Zone
+- Node: 4 vCPU, 16 GB RAM
 
 **Application Components:**
 
-The following containerized services are deployed across all compute nodes. Each service should utilize anti-affinity rules to ensure proper spreading across Availability Zones:
+The following containerized services are deployed across all compute nodes. Each service should use anti-affinity rules to ensure its replicas are spread evenly across Availability Zones:
 
 | Service | Replica count | Description |
 |---------|---------------|-------------|
@@ -345,63 +355,66 @@ The following containerized services are deployed across all compute nodes. Each
 | Kafka | 3 | Message broker and event streaming platform |
 | Redis | 6 | Low-latency in-memory database used as a distributed cache |
 | Zookeeper | 3 | Synchronization application for distributed coordination of ThingsBoard microservices |
-| AWS RDS | 2 | AWS-managed relational database for all entity and time-series data |
+| Postgres node | 2 | Relational database for all entity and time-series data |
 
 **Database Specifications:**
 
-- Instance type: `db.t4g.medium` (2 vCPUs, 4 GiB memory, ARM64 architecture)
-  - since ThingsBoard does not cause consistently high CPU utilization on the SQL database, low-cost burstable instances are suited
-- "Multi-AZ" read-only replica enabled (a total of 2 database instances) for fault tolerance purposes
+- Postgres node: 4 vCPU, 4 GB RAM
+- A read-only Postgres replica in a separate Availability Zone for fault tolerance (2 Postgres nodes total)
 
 **Pros:**
 
-- Easy to backup and maintain PostgreSQL database
+- Easy to back up and maintain PostgreSQL database
 - Self-healing cluster
 - Multi-replica deployment that satisfies strict availability requirements
 - Scaled services naturally provide significantly improved performance
 
 **Cons:**
 
-- Extra costs for managing multiplied Kubernetes and Database services
-  - Additional costs for associated EKS networking and storage services
+- Extra costs for managing more Kubernetes and database services
 
-**Infrastructure costs:**
+**Minimum requirements:**
 
-| Component | Quantity | Monthly cost |
-|-----------|----------|-------------|
-| EC2 (m7g.xlarge) | 3 | $358 |
-| Elastic IP | 3 | $11 |
-| RDS (db.t4g.medium) | 1 | $54 |
-| RDS replica (db.t4g.medium) | 1 | $54 |
-| System node volumes (20 GB) | 3 | $6 |
-| RDS storage (50 GB) | 2 | $12 |
-| EKS Control Plane | 1 | $75 |
-| ELB | 3 | $66 |
-| **Estimated total** | | **~$630/month** |
+| Component | Count | Specification |
+|-----------|-------|---------------|
+| Application node | 3 | 4 vCPU, 16 GB RAM |
+| Postgres node | 2 | 4 vCPU, 4 GB RAM |
+| System volume | 3 | 20 GB |
+| Postgres storage | 2 | 50 GB |
+| Kubernetes control plane | 1 | managed |
+| Load balancer | 3 | — |
+| Static public IP | 3 | — |
+
+*Recommended CPU architecture: ARM64 for application nodes; x86-64 for the Postgres node and replica.*
+
+<Aside type="note">
+ARM64 is preferred for application nodes for its power and cost efficiency.<br />
+x86-64 is preferred for the time-series database nodes, which carry the heaviest read and write load.<br />
+A managed PostgreSQL service is recommended when your provider offers one, as it offloads backups, patching, and failover.
+</Aside>
 
 #### Setup 2: High-Capability MSA Cluster
 
-Similarly to [Scenario B](#scenario-b-single-node-cluster), the second configuration option transitions to a **hybrid database topology**. This enables independent scaling of read-heavy and write-heavy workloads.
+Similarly to [Scenario B](#scenario-b-single-node-cluster), the second configuration option transitions to a **hybrid database topology**. Switching telemetry writes to Cassandra enables far greater scalability, especially valuable for read-heavy and write-heavy workloads.
 
-<ImageGallery images={[{ src: '/src/assets/schemas/scenario-c-hybrid.svg', alt: 'Scenario C, Setup 2: high-availability ThingsBoard microservices cluster across three Availability Zones with hybrid database topology — AWS RDS and a self-hosted Cassandra cluster' }]} />
+<ImageGallery images={[{ src: '/src/assets/schemas/scenario-c-hybrid.svg', alt: 'Scenario C, Setup 2: high-availability ThingsBoard microservices cluster across three Availability Zones with hybrid database topology - a Postgres instance and a self-hosted Cassandra cluster' }]} />
 
 **Architectural Modifications:**
 
-- Entity data: AWS RDS - unchanged from Setup 1
-- Telemetry data: migrate from AWS RDS to self-hosted Apache Cassandra cluster
+- Entity data: stays on the Postgres node (can now be downsized to a burstable instance if available)
+- Telemetry data: migrate from the Postgres node to a self-hosted Apache Cassandra cluster
 
 **Additional Compute Resources:**
 
-Three additional EKS worker nodes are provisioned to host the distributed Cassandra cluster:
+Three additional worker nodes are provisioned to host the distributed Cassandra cluster:
 
-- Instance type: `m7g.large` (2 vCPUs, 8 GiB memory, ARM64 architecture)
-  - for maximum performance on read-intensive loads, it's recommended to use Intel- or AMD-based instance types (`m7i` or `m7a`)
+- Cassandra node: 2 vCPU, 8 GB RAM
 - Node count: 3
 - Deployment pattern: 1 Cassandra instance per node (ensuring fault tolerance and data replication)
 
 **Pros:**
 
-- Easy to backup and maintain PostgreSQL database
+- Easy to back up and maintain PostgreSQL database
 - Cassandra provides enhanced read/write performance for telemetry data
 - Self-healing cluster
 - Multi-replica deployment that satisfies strict availability requirements
@@ -409,29 +422,35 @@ Three additional EKS worker nodes are provisioned to host the distributed Cassan
 
 **Cons:**
 
-- Extra costs for managing multiplied Kubernetes and Database services
-  - Additional costs for associated EKS networking and storage services
-- Self-hosted Cassandra database needs to be maintained and backed up
+- Extra costs for managing more Kubernetes and database services
+- Self-hosted Cassandra adds a layer of backup and maintenance work
 
-**Infrastructure costs:**
+**Minimum requirements:**
 
-| Component | Quantity | Monthly cost |
-|-----------|----------|-------------|
-| EC2 (m7g.xlarge, ThingsBoard) | 5 | $596 |
-| EC2 (m7g.large, Cassandra) | 3 | $179 |
-| Elastic IP | 3 | $11 |
-| RDS (db.t4g.medium) | 1 | $54 |
-| RDS replica (db.t4g.medium) | 1 | $54 |
-| System node volumes (20 GB) | 8 | $16 |
-| RDS storage (100 GB) | 2 | $24 |
-| Cassandra storage volumes (100 GB) | 3 | $24 |
-| EKS Control Plane | 1 | $75 |
-| ELB | 3 | $66 |
-| **Estimated total** | | **~$1,100/month** |
+| Component | Count | Specification |
+|-----------|-------|---------------|
+| Application node | 3 | 4 vCPU, 16 GB RAM |
+| Cassandra node | 3 | 2 vCPU, 8 GB RAM |
+| Postgres node | 2 | 2 vCPU, 4 GB RAM |
+| System volume | 6 | 20 GB |
+| Postgres storage | 2 | 100 GB |
+| Cassandra storage | 3 | 100 GB |
+| Kubernetes control plane | 1 | managed |
+| Load balancer | 3 | — |
+| Static public IP | 3 | — |
+
+*Recommended CPU architecture: ARM64 for application nodes; ARM64 for the Postgres node and replica (burstable); x86-64 for Cassandra nodes.*
+
+<Aside type="note">
+ARM64 is preferred for application nodes for its power and cost efficiency.<br />
+x86-64 is preferred for the time-series database nodes, which carry the heaviest read and write load.<br />
+Postgres now holds only entity data and can use a burstable instance (a lower-cost type that runs at a low baseline CPU and briefly bursts higher during short spikes) if available.<br />
+A managed PostgreSQL service is recommended when your provider offers one, as it offloads backups, patching, and failover.
+</Aside>
 
 #### Summary
 
-Scenario C is the definitive choice for production deployments that have strict high availability and fault tolerance requirements. As a direct evolution of Scenario B, this architecture expands its benefits by spanning all critical services, including the EKS worker nodes and the database, across multiple Availability Zones.
+Scenario C is the definitive choice for production deployments that have strict high availability and fault tolerance requirements. As a direct evolution of Scenario B, this architecture expands its benefits by spanning all critical services, including the worker nodes and the database, across multiple Availability Zones.
 
 The deployment of multiple replicas with anti-affinity rules ensures that the application remains fully operational even during a catastrophic failure of an entire AZ. This multi-AZ scaling simultaneously delivers significantly improved performance and resilience by distributing load across more resources.
 
@@ -439,5 +458,5 @@ This scenario is ideal for mission-critical applications where uptime and perfor
 
 ## See also
 
-- <DocLink product={props.product} path="reference/architecture/performance">Performance</DocLink> — benchmark results behind the dp/s figures: throughput, CPU, IOPS, and storage measured per database and queue setup.
-- <DocLink product={props.product} path="installation">Installation</DocLink> — deployment guides for your chosen scenario: standalone for Scenario A, or a cluster (Docker Compose, Kubernetes) for Scenarios B and C.
+- <DocLink product={props.product} path="reference/architecture/performance">Performance</DocLink> - benchmark results behind the dp/s figures: throughput, CPU, IOPS, and storage measured per database and queue setup.
+- <DocLink product={props.product} path="installation">Installation</DocLink> - deployment guides for your chosen scenario: standalone for Scenario A, or a cluster (Docker Compose, Kubernetes) for Scenarios B and C.
