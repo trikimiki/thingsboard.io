@@ -1,6 +1,7 @@
 import DocLink from '@components/DocLink.astro';
 import ImageGallery from '~/components/ImageGallery.astro';
 import { Aside } from '@astrojs/starlight/components';
+import { Products } from '~/models/site.models';
 
 This article describes the most common deployment architectures supported by ThingsBoard.
 Every deployment scenario has its own pros and cons.
@@ -104,8 +105,8 @@ Always **validate sizing on representative hardware with your own data** before 
 
 Note a few other sizing factors that matter as much as raw dp/s:
 - **Device count matters on its own.** The <DocLink product={props.product} path="user-guide/connectivity-status">Device State service</DocLink> can handle around 100,000 devices per <DocLink product={props.product} path="reference/architecture/microservices/#thingsboard-node">TB-core/TB-node</DocLink>, so very large fleets lean toward a multi-node setup regardless of dp/s.
-- **Count connections, not just throughput.** A single transport handles roughly 50,000 concurrent direct device connections; beyond that, add more transport replicas, or route devices through <a href="/docs/mqtt-broker/">a dedicated MQTT broker</a> or <a href="/docs/iot-gateway/">Gateway</a> instead of connecting them directly to the transport layer.
-- **Size for sustained load, not every spike.** Traffic rarely arrives evenly, so specific patterns (for example, devices that report on a synchronized schedule) can briefly push dp/s above average. Kafka absorbs these short bursts between transport and the rule engine. You still need to size for the considerations above, as these are exceptions where queue buffering does not apply.
+- **Count connections, not just throughput.** A single transport handles roughly 50,000 concurrent direct device connections; beyond that, add more transport replicas, or route devices through <DocLink product={Products.TBMQ} path="">a dedicated MQTT broker</DocLink> or <DocLink product={Products.GW} path="">Gateway</DocLink> instead of connecting them directly to the transport layer.
+- **Size for sustained load, not every spike.** Traffic rarely arrives evenly, so specific patterns (for example, devices that report on a synchronized schedule) can briefly push dp/s above average. <DocLink product={props.product} path="reference/architecture/queue">Kafka</DocLink> absorbs these short bursts between transport and the rule engine. You still need to size for the considerations above, as these are exceptions where queue buffering does not apply.
 
 ## Deployment scenarios
 
